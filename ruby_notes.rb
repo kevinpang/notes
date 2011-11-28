@@ -1,7 +1,36 @@
+# irb # Starts interactive ruby shell in unix
+
 # Shows how to take in command line arguments (example of executing this file with arguments 1, 2, and 3: "ruby test.rb 1 2 3")
 ARGV.each do |a|
   puts "Argument: #{a}"
 end
+
+# Commented out since it prompts for input and creates files
+# print "Type in your input: "
+# input = gets # Prompt for user input
+# puts "You typed #{input}"
+# 
+# code_words = {
+#  'starmonkeys' => 'Phil and Pete, those prickly chancellors of the New Reich', 
+#  'catapult' => 'chucky go-go', 
+#  'firebomb' => 'Heat-Assisted Living', 
+#  'Nigeria' => "Ny and Jerry's Dry Cleaning (with Donuts)",
+#  'Put the kabosh on' => 'Put the cable box on'
+# }
+# 
+# # Get evil idea and swap in code words
+# print "Enter your new idea: " 
+# idea = gets
+# code_words.each do |real, code| 
+#  idea.gsub!( real, code )
+# end
+# 
+# # Save the jibberish to a new file
+# print "File encoded.  Please enter a name for this idea: " 
+# idea_name = gets.strip
+# File::open( "idea-" + idea_name + ".txt", "w" ) do |f|
+#  f << idea
+# end
 
 # Greed is a dice game where you roll up to five dice to accumulate
 # points. The following "score" function will be used to calculate the
@@ -98,6 +127,10 @@ puts a.find { |item| item == "cat" } # cat
 puts a.find { |item| item == "foo" } # nil
 a.each { |item| puts item } # cat, 3.14
 puts a.collect { |item| item.to_s + "foo" } # catfoo, 3.14foo
+puts a.empty?
+puts a.any? # Opposite of a.empty
+a << "foo"
+puts a # catfoo, 3.14foo, foo
 
 b = []
 c = Array.new
@@ -112,15 +145,37 @@ instSection = {
   "drum"      => "percussion",
   "oboe"      => "woodwind",
   "trumpet"   => "brass",
-  "violin"    => "string"
+  "violin"    => "string",
+  :foo        => "bar"
 }
 
 puts instSection["oboe"] # woodwind
 puts instSection["cello"] # string
 puts instSection["foo"] # nil
+puts instSection[:foo] # bar
 
 initialized_hash = Hash.new(0)
 puts initialized_hash["foo"] # 0
+
+another_way_to_create_a_hash = {}
+another_way_to_create_a_hash["foo"] = "bar"
+puts another_way_to_create_a_hash["foo"] # bar
+puts another_way_to_create_a_hash["foo2"] # nil
+
+# Hashes inside arrays (if you use arrows inside of an array, you'll end up with a Hash inside of that Array)
+kitty_toys =
+  [:shape => 'sock', :fabric => 'cashmere'] +
+  [:shape => 'mouse', :fabric => 'calico'] +
+  [:shape => 'eggroll', :fabric => 'chenille']
+
+# So the above is equivalent to
+kitty_toys = [
+  {:shape => 'sock', :fabric => 'cashmere'},
+  {:shape => 'mouse', :fabric => 'calico'},
+  {:shape => 'eggroll', :fabric => 'chenille'}
+]
+
+kitty_toys.sort_by { |toy| toy[:fabric] }
 
 # Regex
 test_regex = /test/
@@ -145,7 +200,7 @@ def callBlockWithArgument
   yield "foo" # Invokes block with "foo" as an argument
 end
 
-callBlockWithArgument { |arg| puts arg }
+callBlockWithArgument { |arg| puts arg } # arg is the "block argument". We expect callBlockWithArgument to execute the code within the block and pass it one block argument here
 
 callBlockWithArgument do |arg|
   puts arg
@@ -336,3 +391,18 @@ puts x.respond_to? "to_s" # true
 puts x.is_a? Object # true
 puts x.kind_of? Object # true
 puts x.instance_of? Object # false
+
+variable = 5
+Constant1 = 6 # Capital letter = constant
+
+def foo(bar)
+  puts bar
+end
+
+foo(:test) # Symbol, basically the same as a string
+foo("test")
+
+$global_variable
+
+some_string = "str"
+puts some_string.respond_to?(:length)

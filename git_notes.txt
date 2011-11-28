@@ -1,0 +1,9 @@
+git init    											Creates git repository
+git status    										Shows current status
+git checkout -b BranchName    		Creates new git branch
+git checkout -f    								Checks out previous commit (-f flag forces overwriting changes). Basically a revert
+git add -A      									Adds all changes to staging
+git commit -am "Some message"     Commit all changes to staging
+git push    											Push changes to repository
+git push heroku    								Push changes to a specific remote repository (in this case the one named "heroku")
+git remote    										Control remote repositories (e.g. GitHub, Heroku)

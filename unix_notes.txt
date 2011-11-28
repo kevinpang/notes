@@ -1,0 +1,26 @@
+Create a file:
+touch foo.txt                					change file access and modification times
+echo “Contents of file” > foo.txt    	write to standard output
+cat > foo.txt                					concatenate and print files to standard output
+
+pwd                     							show current working directory
+ls                    								list directory
+ls -l                    							list directory in long format
+ls -a                    							list directory including hidden files
+
+Example of ls -l:
+drwxr-xr-x    4 cliff    user        1024 Jun 18 09:40 WAITRON_EARNINGS
+-rw-r--r--    1 cliff    user      767392 Jun  6 14:28 scanlib.tar.gz
+^ ^  ^  ^     ^   ^       ^           ^      ^    ^      ^
+| |  |  |     |   |       |           |      |    |      |  
+| |  |  |     | owner   group       size   date  time    name
+| |  |  |     number of links to file or directory contents
+| |  |  permissions for world
+| |  permissions for members of group
+| permissions for owner of file: r = read, w = write, x = execute -=no permission
+type of file: - = normal file, d=directory, l = symbolic link, and others...
+
+cp file1 file2                				copy a file
+mv file1 newname            					move or rename a file
+rm file1                							remove or delete a file
+mkdir dir                							make a directory

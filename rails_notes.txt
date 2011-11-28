@@ -1,0 +1,53 @@
+Rake commands
+rake db:migrate    			Runs database migrations
+annotate    						Annotates model classes with database column info (technically not a Rake command, but you should run this after most rake db:migrates)
+rake db:test:prepare    Ensures data model from development database is reflected in the test database
+rake db:rollback    		Rollback database migration
+rake db:reset    				Clear database
+rake routes    					Prints out all routes in application
+
+Rails commands
+rails new SomeProjectName     										Creates new rails project
+rails s     																			Starts rails development server
+rails g scaffold User name:string email:string    Creates User model, db migration, controller/actions, views
+rails g controller Pages home contact    					Creates controller/actions, views
+rails g model User name:string email:string    		Creates User model, db migration
+rails g rspec:install    													Gets Rails to use RSpec instead of Test::Unit
+rails g migration MigrationName    								Generates an empty migration
+rails g integration_test friendly_forwarding	    Will create an integration test inside spec/requests folder
+rails c    																				Starts up a console to interact with a rails app
+rails c --sandbox    															Stars up a console to interact with a rails app (all changes will be rolled back)
+
+Heroku commands
+heroku open    						Opens up the live app hosted on Heroku
+heroku rake db:migrate    Runs migration scripts on Heroku
+heroku console    				Opens up a Heroku console
+To get Heroku to Ruby 1.9.2, google for “heroku bamboo-mri-1.9.2”
+
+RSpec commands
+rspec spec/    Runs all RSpec tests in the spec folder
+
+RubyGems commands
+gem build GemName
+gem install GemName			
+gem uninstall GemName
+bundle install    				Installs all gems found in project's Gemfile
+
+Active Record (class methods)
+User.new
+User.new(:name => “Kevin”, :email => “kpanghmc@gmail.com”)
+User.first
+User.create(:name => “Kevin”, :email => “kpanghmc@gmail.com”)
+User.create!(:name => “Kevin”, :email => “kpanghmc@gmail.com”)
+User.find(1)
+User.find_by_email(“kpanghmc@gmail.com”)
+User.all
+
+Active Record (instance methods)
+user.save
+user.destroy
+user.reload.email
+user.update_attributes(:name => “Kevin”, :email => “kpanghmc@gmail.com”)
+user.valid?
+user.errors.full_messages
+user.new_record?
