@@ -1,4 +1,9 @@
-# irb # Starts interactive ruby shell in unix
+# This is how your import libraries
+# require 'foo'
+
+# Debugging
+# ruby -r debug somefile.rb
+# irb # IRB = "interactive ruby" is a Ruby shell where you can play around with Ruby in real time
 
 # Shows how to take in command line arguments (example of executing this file with arguments 1, 2, and 3: "ruby test.rb 1 2 3")
 ARGV.each do |a|
@@ -199,6 +204,8 @@ a_song.play
 b_song = Song.new("foo", "bar", 1)
 b_song.play
 puts Song.plays # "2"
+puts Song::plays # You can access items in modules or class-level items like this, but it's usually reserved for 
+                 # modules and class constant (which can't be accessed via the dot)
 
 class KaraokeSong < Song # KaraokeSong inherits from Song
   def initialize(name, artist, duration, lyrics)
@@ -288,10 +295,6 @@ end
 
 # http = Net::HTTP.new("www.google.com", 80)
 # puts http.get("/", nil)
-
-# Debugging
-# ruby -r debug somefile.rb
-# irb # IRB = "interactive ruby" is a Ruby shell where you can play around with Ruby in real time
 
 # Useful functions
 x = 5
@@ -406,3 +409,35 @@ puts score([5,5,5])
 puts score([6,6,6])
 puts score([2,5,2,2,3])
 puts score([5,5,5,5])
+
+# Switch statement
+def dr_chams_timeline( year )
+  case year
+  when 1894
+    "Born." 
+  when 1895..1913
+    "Childhood in Lousville, Winston Co., Mississippi." 
+  when 1914..1919
+    "Worked at a pecan nursery; punched a Quaker." 
+  when 1920..1928
+    "Sailed in the Brotherhood of River Wisdomming, which journeyed \
+     the Mississippi River and engaged in thoughtful self-improvement, \
+     where he finished 140 credit hours from their Oarniversity." 
+  when 1929
+    "Returned to Louisville to pen a novel about time-travelling pheasant hunters." 
+  when 1930..1933
+    "Took up a respectable career insuring pecan nurseries.  Financially stable, he \
+     spent time in Brazil and New Mexico, buying up rare paper-shell pecan trees.  Just \
+     as his notariety came to a crescendo: gosh, he tried to buried himself alive." 
+  when 1934
+    "Went back to writing his novel.  Changed the hunters to insurance tycoons and the \
+     pheasants to Quakers." 
+  when 1935..1940
+    "Took Arthur Cone, the Headmaster of the Brotherhood of River Wisdomming, as a \
+     houseguest.  Together for five years, engineering and inventing." 
+  when 1941
+    "And this is where things got interesting." 
+  end
+end
+
+puts dr_chams_timeline(1915) # Worked at a pecan nursery; punched a Quaker.
