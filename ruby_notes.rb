@@ -5,97 +5,6 @@ ARGV.each do |a|
   puts "Argument: #{a}"
 end
 
-# Commented out since it prompts for input and creates files
-# print "Type in your input: "
-# input = gets # Prompt for user input
-# puts "You typed #{input}"
-# 
-# code_words = {
-#  'starmonkeys' => 'Phil and Pete, those prickly chancellors of the New Reich', 
-#  'catapult' => 'chucky go-go', 
-#  'firebomb' => 'Heat-Assisted Living', 
-#  'Nigeria' => "Ny and Jerry's Dry Cleaning (with Donuts)",
-#  'Put the kabosh on' => 'Put the cable box on'
-# }
-# 
-# # Get evil idea and swap in code words
-# print "Enter your new idea: " 
-# idea = gets
-# code_words.each do |real, code| 
-#  idea.gsub!( real, code )
-# end
-# 
-# # Save the jibberish to a new file
-# print "File encoded.  Please enter a name for this idea: " 
-# idea_name = gets.strip
-# File::open( "idea-" + idea_name + ".txt", "w" ) do |f|
-#  f << idea
-# end
-
-# Greed is a dice game where you roll up to five dice to accumulate
-# points. The following "score" function will be used to calculate the
-# score of a single roll of the dice.
-#
-# A greed roll is scored as follows:
-#
-# * A set of three ones is 1000 points
-#
-# * A set of three numbers (other than ones) is worth 100 times the
-# number. (e.g. three fives is 500 points).
-#
-# * A one (that is not part of a set of three) is worth 100 points.
-#
-# * A five (that is not part of a set of three) is worth 50 points.
-#
-# * Everything else is worth 0 points.
-#
-#
-# Examples:
-#
-# score([1,1,1,5,1]) => 1150 points
-# score([2,3,4,6,2]) => 0 points
-# score([3,4,5,3,3]) => 350 points
-# score([1,5,1,2,4]) => 250 points
-#
-# More scoring examples are given in the tests below:
-#
-# Your goal is to write the score method.
-
-def score(dice)
-  h = Hash.new(0)
-  dice.each { | d | h.store(d, h[d]+1) }
-  
-  score = 0
-  
-  score += h[1] * 100
-  score += 700 if h[1] >= 3
-  
-  score += 200 if h[2] >= 3 
-  score += 300 if h[3] >= 3
-  score += 400 if h[4] >= 3
-  
-  score += h[5] * 50
-  score += 350 if h[5] >= 3
-  
-  score += 600 if h[6] >= 3
-  
-  score
-end
-
-puts score([])
-puts score([5])
-puts score([1])
-puts score([1,5,5,1])
-puts score([2,3,4,6])
-puts score([1,1,1])
-puts score([2,2,2])
-puts score([3,3,3])
-puts score([4,4,4])
-puts score([5,5,5])
-puts score([6,6,6])
-puts score([2,5,2,2,3])
-puts score([5,5,5,5])
-
 # Functions
 def sayGoodnight(name)
   "Goodnight #{name}"
@@ -406,3 +315,94 @@ $global_variable
 
 some_string = "str"
 puts some_string.respond_to?(:length)
+
+# Commented out since it prompts for input and creates files
+# print "Type in your input: "
+# input = gets # Prompt for user input
+# puts "You typed #{input}"
+# 
+# code_words = {
+#  'starmonkeys' => 'Phil and Pete, those prickly chancellors of the New Reich', 
+#  'catapult' => 'chucky go-go', 
+#  'firebomb' => 'Heat-Assisted Living', 
+#  'Nigeria' => "Ny and Jerry's Dry Cleaning (with Donuts)",
+#  'Put the kabosh on' => 'Put the cable box on'
+# }
+# 
+# # Get evil idea and swap in code words
+# print "Enter your new idea: " 
+# idea = gets
+# code_words.each do |real, code| 
+#  idea.gsub!( real, code )
+# end
+# 
+# # Save the jibberish to a new file
+# print "File encoded.  Please enter a name for this idea: " 
+# idea_name = gets.strip
+# File::open( "idea-" + idea_name + ".txt", "w" ) do |f|
+#  f << idea
+# end
+
+# Greed is a dice game where you roll up to five dice to accumulate
+# points. The following "score" function will be used to calculate the
+# score of a single roll of the dice.
+#
+# A greed roll is scored as follows:
+#
+# * A set of three ones is 1000 points
+#
+# * A set of three numbers (other than ones) is worth 100 times the
+# number. (e.g. three fives is 500 points).
+#
+# * A one (that is not part of a set of three) is worth 100 points.
+#
+# * A five (that is not part of a set of three) is worth 50 points.
+#
+# * Everything else is worth 0 points.
+#
+#
+# Examples:
+#
+# score([1,1,1,5,1]) => 1150 points
+# score([2,3,4,6,2]) => 0 points
+# score([3,4,5,3,3]) => 350 points
+# score([1,5,1,2,4]) => 250 points
+#
+# More scoring examples are given in the tests below:
+#
+# Your goal is to write the score method.
+
+def score(dice)
+  h = Hash.new(0)
+  dice.each { | d | h.store(d, h[d]+1) }
+  
+  score = 0
+  
+  score += h[1] * 100
+  score += 700 if h[1] >= 3
+  
+  score += 200 if h[2] >= 3 
+  score += 300 if h[3] >= 3
+  score += 400 if h[4] >= 3
+  
+  score += h[5] * 50
+  score += 350 if h[5] >= 3
+  
+  score += 600 if h[6] >= 3
+  
+  score
+end
+
+puts score([])
+puts score([5])
+puts score([1])
+puts score([1,5,5,1])
+puts score([2,3,4,6])
+puts score([1,1,1])
+puts score([2,2,2])
+puts score([3,3,3])
+puts score([4,4,4])
+puts score([5,5,5])
+puts score([6,6,6])
+puts score([2,5,2,2,3])
+puts score([5,5,5,5])
