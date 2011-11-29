@@ -5,6 +5,18 @@
 # ruby -r debug somefile.rb
 # irb # IRB = "interactive ruby" is a Ruby shell where you can play around with Ruby in real time
 
+# Useful functions
+x = 5
+puts x.class # Fixnum
+puts x.respond_to? "to_s" # true
+puts x.is_a? Object # true
+puts x.kind_of? Object # true
+puts x.instance_of? Object # false
+y = x.dup # Creates a copy of an object
+# puts Object::constants # Lists all top-level constants (and classes as well)
+# puts Object::methods
+# puts Object::class_variables # e.g. @@foo
+
 # Shows how to take in command line arguments (example of executing this file with arguments 1, 2, and 3: "ruby test.rb 1 2 3")
 ARGV.each do |a|
   puts "Argument: #{a}"
@@ -299,17 +311,6 @@ end
 
 # http = Net::HTTP.new("www.google.com", 80)
 # puts http.get("/", nil)
-
-# Useful functions
-x = 5
-puts x.class # Fixnum
-puts x.respond_to? "to_s" # true
-puts x.is_a? Object # true
-puts x.kind_of? Object # true
-puts x.instance_of? Object # false
-# puts Object::constants # Lists all top-level constants (and classes as well)
-# puts Object::methods
-# puts Object::class_variables # e.g. @@foo
 
 variable = 5
 Constant1 = 6 # Capital letter = constant
