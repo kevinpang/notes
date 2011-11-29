@@ -40,7 +40,10 @@ puts a # cat, 3.14
 puts a.find { |item| item == "cat" } # cat
 puts a.find { |item| item == "foo" } # nil
 a.each { |item| puts item } # cat, 3.14
-puts a.collect { |item| item.to_s + "foo" } # catfoo, 3.14foo
+puts a.map { |item| item.to_s + "foo" } # catfoo, 3.14foo
+puts a.collect { |item| item.to_s + "foo" } # catfoo, 3.14foo (collect is the same thing as map)
+puts a.each { |item| item.to_s + "foo" } # cat, 3.14 (this is because each returns the original array while
+                                        # map/collect creates a new array containing the values returned by the block)
 puts a.empty?
 puts a.any? # Opposite of a.empty
 a << "foo"
@@ -205,7 +208,8 @@ b_song = Song.new("foo", "bar", 1)
 b_song.play
 puts Song.plays # "2"
 puts Song::plays # You can access items in modules or class-level items like this, but it's usually reserved for 
-                 # modules and class constant (which can't be accessed via the dot)
+                 # modules and class constants, which can't be accessed via the dot, as well as class methods to
+                 # make it more obvious it's a class method
 
 class KaraokeSong < Song # KaraokeSong inherits from Song
   def initialize(name, artist, duration, lyrics)
@@ -303,6 +307,9 @@ puts x.respond_to? "to_s" # true
 puts x.is_a? Object # true
 puts x.kind_of? Object # true
 puts x.instance_of? Object # false
+# puts Object::constants # Lists all top-level constants (and classes as well)
+# puts Object::methods
+# puts Object::class_variables # e.g. @@foo
 
 variable = 5
 Constant1 = 6 # Capital letter = constant
