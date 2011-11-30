@@ -7,6 +7,35 @@
 console.log(false == 0); // true
 console.log(false === 0); // false - use triple equals if you don't want javascript to do any type conversions
 
+// There are two ways to access properties
+var text = "testing";
+console.log(text.length); // 7
+console.log(text["length"]); // 7
+console.log(text.slice(0, 4)); // "test"
+
+// Objects
+var cat = {colour: "grey", name: "Spot", size: 46};
+console.log(cat.colour); // grey
+
+// Removes the "size" property from the cat object
+delete cat["size"]; 
+console.log(cat.size); // undefined
+
+// Arrays
+var some_array = ["1", "2", "3"];
+console.log(some_array.length); // 3
+var empty_array = [];
+empty_array.push("Mack");
+empty_array.push("the");
+empty_array.push("Knife");
+console.log(empty_array.join(" ")); // "Mack the Knife"
+console.log(mpty_array.pop()); // "Knife"
+console.log(empty_array.join(" ")); // "Mack the"
+
+// Check whether a property exists on an object
+console.log("size" in cat); // false
+console.log("colour" in cat); // true
+
 // Closures
 outer = function() {
  var a = 1;
