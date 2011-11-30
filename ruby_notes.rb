@@ -12,10 +12,14 @@ puts x.respond_to? "to_s" # true
 puts x.is_a? Object # true
 puts x.kind_of? Object # true
 puts x.instance_of? Object # false
-y = x.dup # Creates a copy of an object
+puts Class.superclass # Module
+puts Module.superclass # Object
+puts Object.superclass # nil
+# y = x.dup # Creates a copy of an object
 # puts Object::constants # Lists all top-level constants (and classes as well)
 # puts Object::methods
 # puts Object::class_variables # e.g. @@foo
+# puts Object::instance_methods
 
 # Shows how to take in command line arguments (example of executing this file with arguments 1, 2, and 3: "ruby test.rb 1 2 3")
 ARGV.each do |a|
@@ -449,3 +453,83 @@ def dr_chams_timeline( year )
 end
 
 puts dr_chams_timeline(1915) # Worked at a pecan nursery; punched a Quaker.
+
+# Note that when you see "class << obj" that you're adding directly to the definition of obj (and obj can be a Class)
+
+never_nil ||= [] # Shortcut for never_nil = never_nil || [], makes sure variable is set before using it
+
+# Config::CONFIG is a hash that contains every environment setting used to setup Ruby (this only works within irb?)
+# puts Config::CONFIG['host_os']
+# puts Config::CONFIG['rubylibdir']
+# puts Config::CONFIG['datadir']
+# $" # Global variable containing an array of every library which has been loaded with 'require'
+# $: # Global variable containing a list of all directories which Ruby will check when you
+     # try to load a file with 'require' (can also be accessed via $LOAD_PATH)
+
+class LotteryTicket
+  NUMERIC_RANGE = 1..25
+
+  attr_reader :picks, :purchased
+
+  def initialize( *picks )
+    if picks.length != 3
+      raise ArgumentError, "three numbers must be picked" 
+    elsif picks.uniq.length != 3
+      raise ArgumentError, "the three picks must be different numbers" 
+    elsif picks.detect { |p| not NUMERIC_RANGE === p }
+      raise ArgumentError, "the three picks must be numbers between 1 and 25." 
+    end
+    @picks = picks
+    @purchased = Time.now
+  end
+  
+  def self.new_random
+    new( rand( 25 ) + 1, rand( 25 ) + 1, rand( 25 ) + 1 )
+  rescue ArgumentError
+    retry
+  end
+  
+  def score( final )
+    count = 0
+    final.picks.each do |note|
+     count +=1 if picks.include? note
+    end
+    count
+  end
+end
+
+class LotteryDraw
+  @@tickets = {}
+  def LotteryDraw.buy( customer, *tickets )
+    unless @@tickets.has_key?( customer )
+     @@tickets[customer] = []
+    end
+    @@tickets[customer] += tickets
+  end
+  
+  class << self
+    def play
+      final = LotteryTicket.new_random
+      winners = {}
+      @@tickets.each do |buyer, ticket_list|
+        ticket_list.each do |ticket|
+          score = ticket.score( final )
+          next if score.zero?
+          winners[buyer] ||= []
+          winners[buyer] << [ ticket, score ]
+        end
+      end
+     @@tickets.clear
+     winners
+    end
+  end
+end
+
+LotteryDraw.buy 'Yal-dal-rip-sip', LotteryTicket.new( 12, 6, 19 ), LotteryTicket.new( 5, 1, 3 ), LotteryTicket.new( 24, 6, 8 )
+
+LotteryDraw.play.each do |winner, tickets|
+  puts "#{winner} won on #{tickets.length} ticket(s)!"
+  tickets.each do |ticket, score| 
+    puts "\t#{ticket.picks.join(', ')}: #{score}"
+  end
+end
