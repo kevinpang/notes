@@ -69,6 +69,31 @@ print stuff # {'name':'Kevin'}
 print "age" in stuff # False
 print "name" in stuff # True
 
+# Classes
+print "--- Classes ---"
+class Car(object):
+	def __init__(self):
+		self.miles = 0
+		
+	def drive(self, miles):
+		self.miles += miles
+		
+	def print_mileage(self):
+		print self.miles
+
+car = Car()
+car.drive(50)
+car.print_mileage()
+
+# Inheritance
+class Hummer(Car):
+	def drive(self, miles):
+		self.miles += 2 * miles
+		
+hummer = Hummer()
+hummer.drive(50)
+hummer.print_mileage()
+
 # IO
 if False:
 	# Get input from command line
