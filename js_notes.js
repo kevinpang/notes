@@ -107,3 +107,45 @@ console.log(addTwo(1) + addFive(1)); // 3 + 6 = 9
 var add = function(a, b) {
  return a + b;
 };
+
+function forEach(array, action) {
+  for (var i = 0; i < array.length; i++)
+    action(array[i]);
+}
+
+function sum(numbers) {
+  var total = 0;
+  forEach(numbers, function (number) {
+    total += number;
+  });
+  return total;
+}
+console.log(sum([1, 10, 100])); // 111
+
+console.log(Math.min(5, 6)); // 5
+console.log(Math.min.apply(null, [5, 6])); // 5
+
+function reduce(combine, base, array) {
+  forEach(array, function (element) {
+    base = combine(base, element);
+  });
+  return base;
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+function sum(numbers) {
+  return reduce(add, 0, numbers);
+}
+
+function map(func, array) {
+  var result = [];
+  forEach(array, function (element) {
+    result.push(func(element));
+  });
+  return result;
+}
+
+console.log(map(Math.round, [0.01, 2, 9.89, Math.PI])); // [0, 2, 10, 3]
