@@ -40,6 +40,7 @@ print 'A b C'.swapcase() # 'a B c'
 # Functions
 print '--- Functions ---'
 def print_two(*args):
+	'A string placed at the beginning of a function is used as documentation'
 	arg1, arg2 = args
 	print 'arg1: %r, arg2: %r' % (arg1, arg2)
 	
@@ -48,6 +49,16 @@ def print_two_again(arg1, arg2):
 	
 print_two('Kevin', 'Pang')
 print_two_again('Kevin', 'Pang')
+print print_two.__doc__ # 'A string placed at the beginning of a function is used as documentation'
+
+# Functions are objects too, so you can assign them to variables
+test = print_two
+test('Kevin', 'Pang')
+
+def empty_method(self):
+	pass
+	
+def one_line_method(self): return 'foo'
 
 # If / else
 var_1 = 1
@@ -87,6 +98,19 @@ print len(another_empty_list) # 0
 
 empty_list[0:] = [1, 2, 3] 
 print empty_list # [1, 2, 3]
+
+# Tuples
+print '--- Tuples ---'
+a_tuple = (1, 2, 3) # Immutable, cannot assign new values or append
+print a_tuple[1] # 2
+a_list = list(a_tuple) # Convert tuple to list
+a_list.append(4)
+print a_list # [1, 2, 3, 4]
+a_tuple = tuple(a_list)
+print a_tuple # (1, 2, 3, 4)
+
+empty_tuple = ()
+another_empty_tuple = tuple()
 
 # For loops
 print '--- For loops ---'
@@ -140,7 +164,10 @@ class Car(object):
 		
 	def print_mileage(self):
 		print self.miles
-
+		
+	def _private_method(self):
+		# Prefixing a method with an underscore implies private scope (but not enforced)
+		
 car = Car()
 car.drive(50)
 car.print_mileage()
