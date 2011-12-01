@@ -12,6 +12,8 @@ do multi-line strings
 # Misc
 print isinstance(None, object) # True (None is Python's version of null)
 print None is None # True (There is only one None)
+print type(1) # <type 'int'>
+print None.__class__ # <type 'NoneType'>
 
 # Functions
 print '--- Functions ---'
@@ -85,10 +87,17 @@ stuff = {'name' : 'Kevin', 'age' : 29}
 print stuff['name']
 print stuff['age']
 print stuff # {'age':29, 'name':'Kevin'}
+print stuff.keys() # ['age', 'name']
+print stuff.values() # [29, 'Kevin']
 del stuff['age']
 print stuff # {'name':'Kevin'}
 print 'age' in stuff # False
 print 'name' in stuff # True
+
+empty_dictionary = dict()
+print len(empty_dictionary) # 0
+another_empty_dictionary = {}
+print len(another_empty_dictionary) # 0
 
 # Try / Catch
 print '--- Try / Catch ---'
