@@ -507,6 +507,7 @@ class LotteryDraw
     @@tickets[customer] += tickets
   end
   
+  # Adds class methods to the LotteryDraw class
   class << self
     def play
       final = LotteryTicket.new_random
