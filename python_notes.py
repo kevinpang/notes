@@ -15,6 +15,28 @@ print None is None # True (There is only one None)
 print type(1) # <type 'int'>
 print None.__class__ # <type 'NoneType'>
 
+# Strings
+print '--- Strings ---'
+print 'This is a \n test' # Test will appear on a new line
+print r'This is a \n test' # Raw string, backslash doesn't act as an escape character
+print 'It was the best of times. \
+It was the worst of times.' # Use backslash to continue string on next line 'It was the best of times. It was the worst of times.'
+
+hello_world = 'Hello' ', ' 'world'
+print hello_world # 'Hello, world'
+
+print 'String interpolation {0} {1}'.format('Hello', 'world') # 'String interpolation Hello world'
+print 'String interpolation %s %s' % ('Hello', 'world') # 'String interpolation Hello world'
+
+words = ['Now', 'is', 'the', 'time']
+print ' '.join(words) # 'Now is the time'
+
+print 'foo'.capitalize() # 'Foo'
+print 'foo'.upper() # 'FOO'
+print 'FOO'.lower() # 'foo'
+print 'kevin william pang'.title() # 'Kevin William Pang'
+print 'A b C'.swapcase() # 'a B c'
+
 # Functions
 print '--- Functions ---'
 def print_two(*args):
