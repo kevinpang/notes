@@ -209,6 +209,18 @@ f = make_incrementor(42)
 print f(0) # 42
 print f(1) # 43
 
+# Enums
+print '--- Enums ---'
+
+# Python doesn't have support for Enums, but you can make your own via classes
+class Colors:
+	RED = 1
+	BLUE = 2
+	GREEN = 3
+	
+print Colors.RED # 1
+# print Colors.ORANGE # This will throw an AttributeError exception since Colors doesn't contain an attribute called ORANGE 
+
 # IO
 if False:
 	# Get input from command line
