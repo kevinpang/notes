@@ -190,6 +190,15 @@ hummer = Hummer()
 hummer.drive(50)
 hummer.print_mileage()
 
+# Lambdas
+print '--- Lambdas ---'
+def make_incrementor(n):
+	return lambda x: x + n # Creates an anonymous function, restricted to a single expression
+	
+f = make_incrementor(42)
+print f(0) # 42
+print f(1) # 43
+
 # IO
 if False:
 	# Get input from command line
