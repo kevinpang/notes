@@ -63,9 +63,9 @@ def one_line_method(self): return 'foo'
 def pass_in_list_and_dictionary(*arr, **dict):
 	for arr_item in arr:
 		print arr_item
-		
+
 	for key in dict.keys():
-		print key ':' dict[key]
+		print key, ':', dict[key]
 
 pass_in_list_and_dictionary(1, 2, 3, a=4, b=5, c=6) # 1, 2, 3, a:4, b:5, c:6
 
@@ -107,6 +107,15 @@ print len(another_empty_list) # 0
 
 empty_list[0:] = [1, 2, 3] 
 print empty_list # [1, 2, 3]
+
+# Sets
+print '--- Sets ---'
+highlanders = ['MacLeod', 'Ramirez', 'MacLeod', 'Matunas', 'MacLeod', 'Malcolm', 'MacLeod']
+there_can_be_only_one = set(highlanders)
+print len(highlanders) # 7
+print len(there_can_be_only_one) # 4
+
+print set('12345') # set(['1', '2', '3', '4', '5'])
 
 # Tuples
 print '--- Tuples ---'
@@ -176,6 +185,7 @@ class Car(object):
 		
 	def _private_method(self):
 		# Prefixing a method with an underscore implies private scope (but not enforced)
+		pass
 		
 car = Car()
 car.drive(50)
