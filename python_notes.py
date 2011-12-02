@@ -60,6 +60,15 @@ def empty_method(self):
 	
 def one_line_method(self): return 'foo'
 
+def pass_in_list_and_dictionary(*arr, **dict):
+	for arr_item in arr:
+		print arr_item
+		
+	for key in dict.keys():
+		print key ':' dict[key]
+
+pass_in_list_and_dictionary(1, 2, 3, a=4, b=5, c=6) # 1, 2, 3, a:4, b:5, c:6
+
 # If / else
 var_1 = 1
 var_2 = 2
