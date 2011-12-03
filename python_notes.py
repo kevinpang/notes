@@ -11,9 +11,19 @@ do multi-line strings
 
 # Misc
 print isinstance(None, object) # True (None is Python's version of null)
+print issubclass(str, object) # True
 print None is None # True (There is only one None)
 print type(1) # <type 'int'>
 print None.__class__ # <type 'NoneType'>
+
+class Parent(object): pass
+class Child(Parent): pass
+
+# __mro__ (can also use the mro() function) is the Method Resolution Order. It returns a tuple listing the types
+# the class is derived from, in the order they are searched for methods.
+print Child.__mro__ # (<class '__main__.Child'>, <class '__main__.Parent'>, <type 'object'>)
+print Child.__mro__.__class__ # <type 'tuple'>
+print Child.__mro__.__class__.__name__ # tuple
 
 # Strings
 print '--- Strings ---'
@@ -108,6 +118,45 @@ print len(another_empty_list) # 0
 empty_list[0:] = [1, 2, 3] 
 print empty_list # [1, 2, 3]
 
+print sorted([5, 4, 3, 2, 1]) # [1, 2, 3, 4, 5]
+another_list = [5, 4, 3, 2, 1]
+another_list.sort()
+print another_list # [1, 2, 3, 4, 5]
+
+# Filter selects certain items from a list
+def is_even(item):
+	return item % 2 == 0
+
+seq = [1, 2, 3, 4, 5, 6]
+filtered_seq = filter(is_even, seq)
+
+print seq # [1, 2, 3, 4, 5, 6]
+print filtered_seq # [2, 4, 6]
+
+# Map transforms elements of a list
+def add_ten(item):
+	return item + 10
+
+seq = [1, 2, 3]
+mapped_seq = map(add_ten, seq) 
+
+print seq # [1, 2, 3]
+print mapped_seq # [11, 12, 13]
+
+# Reduce applies a function to each item of the list and accumulates the values to reduce the list to a single value
+def add(accumulated_value, item):
+	return accumulated_value + item
+
+def multiply(accumulated_value, item):
+	return accumulated_value * item	
+
+print reduce(add, [1, 2, 3]) # 1 + 2 + 3 = 6
+print reduce(multiply, [1, 2, 3], 1) # 1 * 1 * 2 * 3 = 6
+
+# List comprehensions
+meats = ['ham', 'turkey', 'steak']
+print [meat.upper() for meat in meats] # ['HAM', 'TURKEY', 'STEAK']
+
 # Sets
 print '--- Sets ---'
 highlanders = ['MacLeod', 'Ramirez', 'MacLeod', 'Matunas', 'MacLeod', 'Malcolm', 'MacLeod']
@@ -170,6 +219,26 @@ try:
 except Exception as ex:
 	print ex.__class__.__name__ # AttributeError
 	print ex.args[0] # 'NoneType' object has no attribute 'some_method_none_does_not_know_about'
+finally:
+	print "Finally!"
+	
+try:
+	raise Exception("1", "2")
+except Exception as ex:
+	print ex.args[0] # 1
+	print ex.args[1] # 2
+	
+	var_1, var_2 = ex
+	
+	print var_1 # 1
+	print var_2 # 2
+	
+try:
+	pass
+except Exception as ex:
+	print 'This shouldn\'t be hit!'
+else:
+	print "Yay!" # Yay!
 
 # Classes
 print '--- Classes ---'
@@ -205,7 +274,18 @@ print '--- Lambdas ---'
 def make_incrementor(n):
 	return lambda x: x + n # Creates an anonymous function, restricted to a single expression
 	
+def make_incrementor_without_lambdas(n):
+	# This is equivalent to using a lambda, except you can define multi-line functions
+	def foo(x):
+		return x + n
+		
+	return foo
+	
 f = make_incrementor(42)
+print f(0) # 42
+print f(1) # 43
+
+f = make_incrementor_without_lambdas(42)
 print f(0) # 42
 print f(1) # 43
 
@@ -220,6 +300,19 @@ class Colors:
 	
 print Colors.RED # 1
 # print Colors.ORANGE # This will throw an AttributeError exception since Colors doesn't contain an attribute called ORANGE 
+
+# Iterators
+print '--- Iterators ---'
+it = iter(range(0, 6))
+
+for num in it:
+	print num # 0 1 2 3 4 5
+	
+it = iter(range(0, 6))
+print next(it) # 0
+print next(it) # 1
+
+# Generators
 
 # IO
 if False:
