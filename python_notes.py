@@ -157,6 +157,70 @@ print reduce(multiply, [1, 2, 3], 1) # 1 * 1 * 2 * 3 = 6
 meats = ['ham', 'turkey', 'steak']
 print [meat.upper() for meat in meats] # ['HAM', 'TURKEY', 'STEAK']
 
+# Generators (slightly different than list comprehensions b/c generators must be iterated through, the values are 
+# generated on the fly rather than stored. Generators are memory friendly, but less versatile.)
+print '--- Generators ---'
+result = []
+bacon_generator = (n + ' bacon' for n in ['crunchy', 'veggie', 'danish'])
+for bacon in bacon_generator:
+	result.append(bacon)
+	
+print result # ['crunchy bacon', 'veggie bacon', 'danish bacon']
+
+dynamite = ('Boom!' for n in range(3))
+
+attempt_1 = list(dynamite) # ['Boom!', 'Boom!', 'Boom!]
+attempt_2 = list(dynamite) # [] <-- This is because generators are a one shot deal
+
+print list(attempt_1)
+print list(attempt_2)
+
+# The presence of the yield keyword turns abc into a generator factory. Execution starts when the next() routine is invoked, then
+# stops when the first yield keyword is hit. Then resumes when next() is invoked again, then stops wen the next yield keyword is hit.
+def abc():
+	yield "a"
+	yield "b"
+	yield "c"
+	
+generator_factory = abc()
+print generator_factory.next() # a
+print generator_factory.next() # b
+print generator_factory.next() # c
+
+def simple_generator_method():
+	yield 'peanut'
+	yield 'butter'
+	yield 'and'
+	yield 'jelly'
+	
+result = []
+
+for item in simple_generator_method(): # The for loop will invoke the next() routine on simple_generator_method
+	result.append(item)
+	
+print result # ['peanut', 'butter', 'and', 'jelly']
+
+def square_me(seq):
+	for x in seq:
+		yield x * x
+	
+square_me_generator = square_me(range(5))
+
+for item in square_me_generator:
+	print item # 0, 1, 4, 9, 16
+
+# This will also work, since converting to a list will iterate via the next() routine
+# print list(square_me_generator) # [0, 1, 4, 9 ,16]
+
+def fibon(n):
+    a = b = 1
+    for i in xrange(n):
+        yield a
+        a, b = b, a + b
+
+for x in fibon(5):
+	print x # 1 1 2 3 5
+
 # Sets
 print '--- Sets ---'
 highlanders = ['MacLeod', 'Ramirez', 'MacLeod', 'Matunas', 'MacLeod', 'Malcolm', 'MacLeod']
@@ -311,8 +375,6 @@ for num in it:
 it = iter(range(0, 6))
 print next(it) # 0
 print next(it) # 1
-
-# Generators
 
 # IO
 if False:
