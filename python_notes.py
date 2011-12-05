@@ -376,6 +376,11 @@ it = iter(range(0, 6))
 print next(it) # 0
 print next(it) # 1
 
+# This is useful when writing Python scripts that need to be usable as both scripts run from the command line
+# as well as modules imported from other Python modules.
+if __name__ == "__main__":
+	print 'This script was run from the command line'
+
 # IO
 if False:
 	# Get input from command line
