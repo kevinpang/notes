@@ -1,8 +1,5 @@
 from sys import argv
 
-# Alternative way of writing the above, but any calls to argv would need to be fully qualified (i.e. sys.argv)
-# import sys.argv 
-
 print 'Hello World!'
 
 print """
@@ -418,11 +415,6 @@ class Colors:
 print Colors.RED # 1
 # print Colors.ORANGE # This will throw an AttributeError exception since Colors doesn't contain an attribute called ORANGE 
 
-# This is useful when writing Python scripts that need to be usable as both scripts run from the command line
-# as well as modules imported from other Python modules.
-if __name__ == "__main__":
-	print 'This script was run from the command line'
-
 # IO
 if False:
 	# Get input from command line
@@ -437,9 +429,3 @@ if False:
 	txt = open('python_notes.py', 'r')
 	print txt.read()
 	txt.close()
-	
-# Packages
-# Putting an __init__.py file into a directory makes Python treat the directory as containing packages. It can
-# be empty or you can p initialization code for the package in there. Some package authors will define an
-# __all__ list inside  __init__.py so that anyone importing * from the package will get all the names listed
-# within the package's __all__ list (this is by convention).
