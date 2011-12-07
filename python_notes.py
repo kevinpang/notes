@@ -15,9 +15,6 @@ print issubclass(str, object) # True
 print None is None # True (There is only one None)
 print type(1) # <type 'int'>
 print None.__class__ # <type 'NoneType'>
-# print dir(sys) # Displays names defined in module 'sys'
-# print dir() # Displays named defined currently
-# print dir(__builtin__) # Displays names of built-in functions and variables
 
 class Parent(object): pass
 class Child(Parent): pass
@@ -136,6 +133,94 @@ filtered_seq = filter(is_even, seq)
 print seq # [1, 2, 3, 4, 5, 6]
 print filtered_seq # [2, 4, 6]
 
+# Map transforms elements of a list
+def add_ten(item):
+	return item + 10
+
+seq = [1, 2, 3]
+mapped_seq = map(add_ten, seq) 
+
+print seq # [1, 2, 3]
+print mapped_seq # [11, 12, 13]
+
+# Reduce applies a function to each item of the list and accumulates the values to reduce the list to a single value
+def add(accumulated_value, item):
+	return accumulated_value + item
+
+def multiply(accumulated_value, item):
+	return accumulated_value * item	
+
+print reduce(add, [1, 2, 3]) # 1 + 2 + 3 = 6
+print reduce(multiply, [1, 2, 3], 1) # 1 * 1 * 2 * 3 = 6
+
+# List comprehensions
+meats = ['ham', 'turkey', 'steak']
+print [meat.upper() for meat in meats] # ['HAM', 'TURKEY', 'STEAK']
+
+# Generators (slightly different than list comprehensions b/c generators must be iterated through, the values are 
+# generated on the fly rather than stored. Generators are memory friendly, but less versatile.)
+print '--- Generators ---'
+result = []
+bacon_generator = (n + ' bacon' for n in ['crunchy', 'veggie', 'danish'])
+for bacon in bacon_generator:
+	result.append(bacon)
+	
+print result # ['crunchy bacon', 'veggie bacon', 'danish bacon']
+
+dynamite = ('Boom!' for n in range(3))
+
+attempt_1 = list(dynamite) # ['Boom!', 'Boom!', 'Boom!]
+attempt_2 = list(dynamite) # [] <-- This is because generators are a one shot deal
+
+print list(attempt_1)
+print list(attempt_2)
+
+# The presence of the yield keyword turns abc into a generator factory. Execution starts when the next() routine is invoked, then
+# stops when the first yield keyword is hit. Then resumes when next() is invoked again, then stops wen the next yield keyword is hit.
+def abc():
+	yield "a"
+	yield "b"
+	yield "c"
+	
+generator_factory = abc()
+print generator_factory.next() # a
+print generator_factory.next() # b
+print generator_factory.next() # c
+
+def simple_generator_method():
+	yield 'peanut'
+	yield 'butter'
+	yield 'and'
+	yield 'jelly'
+	
+result = []
+
+for item in simple_generator_method(): # The for loop will invoke the next() routine on simple_generator_method
+	result.append(item)
+	
+print result # ['peanut', 'butter', 'and', 'jelly']
+
+def square_me(seq):
+	for x in seq:
+		yield x * x
+	
+square_me_generator = square_me(range(5))
+
+for item in square_me_generator:
+	print item # 0, 1, 4, 9, 16
+
+# This will also work, since converting to a list will iterate via the next() routine
+# print list(square_me_generator) # [0, 1, 4, 9 ,16]
+
+def fibon(n):
+    a = b = 1
+    for i in xrange(n):
+        yield a
+        a, b = b, a + b
+
+for x in fibon(5):
+	print x # 1 1 2 3 5
+
 # Sets
 print '--- Sets ---'
 highlanders = ['MacLeod', 'Ramirez', 'MacLeod', 'Matunas', 'MacLeod', 'Malcolm', 'MacLeod']
@@ -224,7 +309,6 @@ print '--- Classes ---'
 class Car(object):
 	def __init__(self):
 		self.miles = 0
-		self.make = ''
 		
 	def drive(self, miles):
 		self.miles += miles
@@ -232,39 +316,13 @@ class Car(object):
 	def print_mileage(self):
 		print self.miles
 		
-	def _pseudo_private_method(self):
-		# Prefixing a method with an underscore implies private scope (but not enforced, there are no private methods / variables
-		# in Python)
-		print 'pseudo private method'
-		
-	def __more_private_method(self):
-		# Prefixing a method with double underscore makes it harder to use directly due to name mangling, but you can still access it
-		print 'more private method'
-	
-	# Creating properties via decorators	
-	@property
-	def make(self):
-		return self._make
-		
-	@make.setter
-	def make(self, a_make):
-		self._make = a_make
-		
-	def __str__(self):
-		return self._make
-		
-	def __repr__(self):
-		return self._make + ' ' + str(self.miles)
+	def _private_method(self):
+		# Prefixing a method with an underscore implies private scope (but not enforced)
+		pass
 		
 car = Car()
 car.drive(50)
 car.print_mileage()
-car._pseudo_private_method() # This works!
-car._Car__more_private_method() # This works too! Nothing is private!
-car.make = 'Honda'
-print car.make # Honda
-print str(car) # Honea
-print repr(car) # Honda 50
 
 # Inheritance
 class Hummer(Car):
@@ -295,114 +353,6 @@ f = make_incrementor_without_lambdas(42)
 print f(0) # 42
 print f(1) # 43
 
-# Map transforms elements of a list
-print '--- Map ---'
-def add_ten(item):
-	return item + 10
-
-seq = [1, 2, 3]
-mapped_seq = map(add_ten, seq) 
-
-print seq # [1, 2, 3]
-print mapped_seq # [11, 12, 13]
-
-# Reduce applies a function to each item of the list and accumulates the values to reduce the list to a single value
-print '--- Reduce ---'
-def add(accumulated_value, item):
-	return accumulated_value + item
-
-def multiply(accumulated_value, item):
-	return accumulated_value * item	
-
-print reduce(add, [1, 2, 3]) # 1 + 2 + 3 = 6
-print reduce(multiply, [1, 2, 3], 1) # 1 * 1 * 2 * 3 = 6
-
-# List comprehensions
-print '--- List comprehensions ---'
-meats = ['ham', 'turkey', 'steak']
-print [meat.upper() for meat in meats] # ['HAM', 'TURKEY', 'STEAK']
-print map(lambda meat: meat.upper(), meats) # This is equivalent to the above
-
-def upper_meat(meat):
-	return meat.upper()
-	
-print map(upper_meat, meats) # This is also equivalent
-
-# Generators (slightly different than list comprehensions b/c generators must be iterated through, the values are 
-# generated on the fly rather than stored. Generators are memory friendly, but less versatile.)
-print '--- Generators ---'
-result = []
-bacon_generator = (n + ' bacon' for n in ['crunchy', 'veggie', 'danish'])
-for bacon in bacon_generator:
-	result.append(bacon)
-	
-print result # ['crunchy bacon', 'veggie bacon', 'danish bacon']
-
-dynamite = ('Boom!' for n in range(3))
-
-attempt_1 = list(dynamite) # ['Boom!', 'Boom!', 'Boom!]
-attempt_2 = list(dynamite) # [] <-- This is because generators are a one shot deal
-
-print list(attempt_1)
-print list(attempt_2)
-
-# The presence of the yield keyword turns abc into a generator factory. Execution starts when the next() routine is invoked, then
-# stops when the first yield keyword is hit. Then resumes when next() is invoked again, then stops wen the next yield keyword is hit.
-def abc():
-	yield "a"
-	yield "b"
-	yield "c"
-	
-generator_factory = abc()
-print generator_factory.next() # a
-print generator_factory.next() # b
-print generator_factory.next() # c
-
-def simple_generator_method():
-	yield 'peanut'
-	yield 'butter'
-	yield 'and'
-	yield 'jelly'
-	
-result = []
-
-for item in simple_generator_method(): # The for loop will invoke the next() routine on simple_generator_method
-	result.append(item)
-	
-print result # ['peanut', 'butter', 'and', 'jelly']
-
-def square_me(seq):
-	for x in seq:
-		yield x * x
-	
-square_me_generator = square_me(range(5))
-
-for item in square_me_generator:
-	print item # 0, 1, 4, 9, 16
-
-# This will also work, since converting to a list will iterate via the next() routine
-# print list(square_me_generator) # [0, 1, 4, 9 ,16]
-
-def fibon(n):
-    a = b = 1
-    for i in xrange(n):
-        yield a
-        a, b = b, a + b
-
-for x in fibon(5):
-	print x # 1 1 2 3 5
-	
-# Iterators
-print '--- Iterators ---'
-it = iter(range(0, 6))
-
-for num in it:
-	print num # 0 1 2 3 4 5
-
-it = iter(range(0, 6))
-print next(it) # 0
-print next(it) # 1
-
 # Enums
 print '--- Enums ---'
 
@@ -414,6 +364,17 @@ class Colors:
 	
 print Colors.RED # 1
 # print Colors.ORANGE # This will throw an AttributeError exception since Colors doesn't contain an attribute called ORANGE 
+
+# Iterators
+print '--- Iterators ---'
+it = iter(range(0, 6))
+
+for num in it:
+	print num # 0 1 2 3 4 5
+	
+it = iter(range(0, 6))
+print next(it) # 0
+print next(it) # 1
 
 # IO
 if False:
