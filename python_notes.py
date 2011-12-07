@@ -3,16 +3,9 @@ from sys import argv
 # Alternative way of writing the above, but any calls to argv would need to be fully qualified (i.e. sys.argv)
 # import sys.argv
 
-print 'Hello World!'
-
-print """
-Use triple quotes to 
-do multi-line strings
-"""
-
+# Misc
 # Logic operators: and, or, not, !=, ==, >=, <=
 
-# Misc
 print isinstance(None, object) # True (None is Python's version of null)
 print issubclass(str, object) # True
 print None is None # True (There is only one None)
@@ -37,6 +30,11 @@ print 'This is a \n test' # Test will appear on a new line
 print r'This is a \n test' # Raw string, backslash doesn't act as an escape character
 print 'It was the best of times. \
 It was the worst of times.' # Use backslash to continue string on next line 'It was the best of times. It was the worst of times.'
+
+print """
+Use triple quotes to 
+do multi-line strings
+"""
 
 hello_world = 'Hello' ', ' 'world'
 print hello_world # 'Hello, world'
@@ -70,6 +68,21 @@ print print_two.__doc__ # 'A string placed at the beginning of a function is use
 # Functions are objects too, so you can assign them to variables
 test = print_two
 test('Kevin', 'Pang')
+
+# Simulating Ruby's "each" method. Not as elegant without blocks since you have to define the function elsewhere (or use a lambda),
+# but at least it's doable.
+class MyList(list):
+	def each(self, func):
+		for item in self:
+			func(item)
+
+def add_s(item):
+	print item + 's'
+			
+my_list = MyList()
+my_list.append('banana')
+my_list.append('grape')
+my_list.each(add_s)
 
 def empty_method(self):
 	pass
@@ -421,7 +434,7 @@ print Colors.RED # 1
 # This is useful when writing Python scripts that need to be usable as both scripts run from the command line
 # as well as modules imported from other Python modules.
 if __name__ == "__main__":
-print 'This script was run from the command line'
+	print 'This script was run from the command line'
 
 # IO
 if False:
