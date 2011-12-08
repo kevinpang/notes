@@ -70,7 +70,10 @@ test = print_two
 test('Kevin', 'Pang')
 
 # Simulating Ruby's "each" method. Not as elegant without blocks since you have to define the function elsewhere (or use a lambda),
-# but at least it's doable.
+# but at least it's doable. It would probably be more Pythonic to simply do something like:
+#
+# for item in my_list:
+# 	add_s(item)
 class MyList(list):
 	def each(self, func):
 		for item in self:
@@ -290,6 +293,21 @@ class Hummer(Car):
 hummer = Hummer()
 hummer.drive(50)
 hummer.print_mileage()
+
+# Monkey patching
+print '--- Monkey patching ---'
+class Dog(object):
+	def bark(self):
+		return 'WOOF'
+		
+def wag(self):
+	return 'HAPPY'
+	
+Dog.wag = wag
+
+a_dog = Dog()
+print a_dog.bark() # WOOF
+print a_dog.wag() # HAPPY
 
 # Lambdas
 print '--- Lambdas ---'
