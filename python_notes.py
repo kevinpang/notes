@@ -39,8 +39,10 @@ do multi-line strings
 hello_world = 'Hello' ', ' 'world'
 print hello_world # 'Hello, world'
 
-print 'String interpolation {0} {1}'.format('Hello', 'world') # 'String interpolation Hello world'
-print 'String interpolation %s %s' % ('Hello', 'world') # 'String interpolation Hello world'
+# String interpolation
+print 'String interpolation {0} {1}'.format('Hello', 'world') # Hello world'
+print 'String interpolation {foo} {bar}'.format(foo = 'Hello', bar = 'world') # Hello world!
+print 'String interpolation %s %s' % ('Hello', 'world') # Hello world! <-- old style (deprecated)
 
 words = ['Now', 'is', 'the', 'time']
 print ' '.join(words) # 'Now is the time'
@@ -56,10 +58,10 @@ print '--- Functions ---'
 def print_two(*args):
 	'A string placed at the beginning of a function is used as documentation'
 	arg1, arg2 = args
-	print 'arg1: %r, arg2: %r' % (arg1, arg2)
+	print 'arg1: %r, arg2: %r'.format(arg1, arg2)
 	
 def print_two_again(arg1, arg2):
-	print 'arg1: %r, arg2: %r' % (arg1, arg2)
+	print 'arg1: %r, arg2: %r'.format(arg1, arg2)
 	
 print_two('Kevin', 'Pang')
 print_two_again('Kevin', 'Pang')
