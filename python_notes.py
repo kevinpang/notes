@@ -1,4 +1,5 @@
 from sys import argv
+from functools import partial
 
 # Alternative way of writing the above, but any calls to argv would need to be fully qualified (i.e. sys.argv)
 # import sys.argv
@@ -476,3 +477,28 @@ if False:
 # be empty or you can p initialization code for the package in there. Some package authors will define an
 # __all__ list inside __init__.py so that anyone importing * from the package will get all the names listed
 # within the package's __all__ list (this is by convention).
+
+# Decorating with functions
+print '--- Decorating with functions ---'
+def addCowbell(fn):
+	fn.foo = 'foo'
+	return fn
+
+@addCowbell
+def bar():
+	return 'bar'
+	
+print bar.foo # foo
+
+# Partials
+print '--- Partials ---'
+def max(a, b):
+	if a > b:
+		return a
+	else:
+		return b
+		
+max100 = partial(max, 100)
+
+print max100(50) # 100
+print max100(150) # 150
