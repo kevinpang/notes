@@ -293,6 +293,9 @@ class Hummer(Car):
 	def drive(self, miles):
 		self.miles += 2 * miles
 		
+	def print_mileage(self):
+		super(Hummer, self).print_mileage() # This is how you invoke the parent class
+		
 hummer = Hummer()
 hummer.drive(50)
 hummer.print_mileage()
@@ -471,6 +474,10 @@ if False:
 	txt = open('python_notes.py', 'r')
 	print txt.read()
 	txt.close()
+	
+	# Reading files using the with statement
+	with open('python_notes.py', 'r') as f:
+		print f.read()
 	
 # Packages
 # Putting an __init__.py file into a directory makes Python treat the directory as containing packages. It can
