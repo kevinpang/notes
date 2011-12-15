@@ -244,9 +244,12 @@ else:
 # Classes
 print '--- Classes ---'
 class Car(object):
+	total_cars = 0 # Class variable (any variables defined outside of a function are class variables)
+	
 	def __init__(self):
 		self.miles = 0
 		self.make = ''
+		Car.total_cars += 1
 		
 	def drive(self, miles):
 		self.miles += miles
@@ -299,6 +302,8 @@ class Hummer(Car):
 hummer = Hummer()
 hummer.drive(50)
 hummer.print_mileage()
+
+print Car.total_cars # 2
 
 # Monkey patching
 print '--- Monkey patching ---'
@@ -509,3 +514,105 @@ max100 = partial(max, 100)
 
 print max100(50) # 100
 print max100(150) # 150
+
+# Decorators
+print '--- Decorators ---'
+
+# Decorators are wrappers that let you execute code before and after the function they decorate
+def makebold(fn):
+    def wrapper():
+        return "<b>" + fn() + "</b>"
+    return wrapper
+
+def makeitalic(fn):
+    def wrapper():
+        return "<i>" + fn() + "</i>"
+    return wrapper
+
+@makebold
+@makeitalic
+def say():
+    return "hello"
+
+# say = makebold(makeitalic(say)) # This is equivalent to using the decorators above
+
+print say() # <b><i>hello</i></b>
+
+# Metaclasses (note that these aren't very frequently used!)
+print '--- Metaclasses ---'
+
+def some_method(self):
+	print 'some_method'
+
+# You can dynamically create classes by using the "type" function. The 2nd argument is a tuple of the parent class(es). 
+# The 3rd argument is a dictionary containing attribute names and values
+MyOtherShinyClass = type('MyOtherShinyClass', (), {'some_attribute' : True, 'some_method' : some_method}) 
+													  
+print MyOtherShinyClass # <class '__main__.MyOtherShinyClass'>
+print MyOtherShinyClass.some_attribute # True
+
+an_instance = MyOtherShinyClass()
+an_instance.some_method() # some_method
+
+# Metaclasses are classes that create classes (i.e. a class factory). When Python sees a class definition, it checks if
+# the class definition contains a __metaclass__ attribute. If so, it will use it to create the class object. If not, it
+# will go to the parent class and try to do the same thing. If it can't find any __metaclass__ attributes, it falls back to
+# using the "type" function to create the class object.
+#
+# The main purpose of using metaclasses is to change the class automatically, when it's created.
+
+# Using a function as a metaclasses
+def upper_attr(future_class_name, future_class_parents, future_class_attr):
+	"""
+	  Return a class object, with the list of its attribute turned 
+	  into uppercase.
+	"""
+
+  	# pick up any attribute that doesn't start with '__'
+	attrs = ((name, value) for name, value in future_class_attr.items() if not name.startswith('__'))
+	# turn them into uppercase
+	uppercase_attr = dict((name.upper(), value) for name, value in attrs)
+
+	# let `type` do the class creation
+	return type(future_class_name, future_class_parents, uppercase_attr)
+
+class Foo(object):
+	__metaclass__ = upper_attr
+	 
+	# we can define __metaclass__ here instead to affect only this class
+	bar = 'bip'
+
+f = Foo()
+print hasattr(Foo, 'bar') # False
+print hasattr(Foo, 'BAR') # True
+print f.BAR # bip
+
+# Using a class as a metaclass
+class UpperAttrMetaclass(type): 
+    # __new__ is the method called before __init__
+    # it's the method that creates the object and returns it
+    # while __init__ just initializes the object passed as parameter
+    # you rarely use __new__, except when you want to control how the object
+    # is created.
+    # here the created object is the class, and we want to customize it
+    # so we override __new__
+    # you can do some stuff in __init__ too if you wish
+    # some advanced use involves overriding __call__ as well, but we won't
+    # see this
+    def __new__(self, future_class_name, future_class_parents, future_class_attr):
+		attrs = ((name, value) for name, value in future_class_attr.items() if not name.startswith('__'))
+		uppercase_attr = dict((name.upper(), value) for name, value in attrs)
+
+		# return type(future_class_name, future_class_parents, uppercase_attr) # Same as below, but less OOP
+		return type.__new__(self, future_class_name, future_class_parents, uppercase_attr)
+		# return super(UpperAttrMetaclass, cls).__new__(cls, name, bases, uppercase_attr) # Yet another way, in case this metaclass inherits from another metaclass
+		
+class Foo2(object):
+	__metaclass__ = UpperAttrMetaclass
+	
+	bar = 'bip'
+	
+f2 = Foo2()
+print hasattr(Foo2, 'bar') # False
+print hasattr(Foo2, 'BAR') # True
+print f2.BAR # bip
