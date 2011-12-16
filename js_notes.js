@@ -149,3 +149,48 @@ function map(func, array) {
 }
 
 console.log(map(Math.round, [0.01, 2, 9.89, Math.PI])); // [0, 2, 10, 3]
+
+// Module pattern (self executing anonymous function)
+var myNamespace = (function(){
+    // Private variables / methods
+    var myPrivateVar = 0;
+    var myPrivateMethod = function(someText){
+        console.log(someText);
+    }
+	
+    // Public variables / methods
+    return {
+        myPublicVar: "foo",	
+	       myPublicFunction: function(bar){
+    	       myPrivateVar++;
+	           myPrivateMethod(bar);
+	       }
+    }
+})();
+
+myNamespace.myPublicVar = "blah"; // OK
+myNamespace.myPublicFunction("test") // OK
+
+// Prototypal inheritance
+function Shape(x, y) {
+    this.x = x;
+    this.y = y;
+}
+
+Shape.prototype.toString = function() {
+    return 'Shape at ' + this.x + ', ' + this.y;
+};
+
+function Circle(x, y, r) {
+    Shape.call(this, x, y); // invoke the base class's constructor function to take co-ords
+    this.r = ;r
+}
+
+Circle.prototype = new Shape();
+
+Circle.prototype.toString = function() {
+    return 'Circular ' + Shape.prototype.toString.call(this) + ' with radius ' + this.r;
+}
+
+var c = new Circle(1, 2, 3);
+console.log(c.toString()); // "Circular Shape at 1, 2 with radius "3
