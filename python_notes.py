@@ -4,14 +4,34 @@ from functools import partial
 # Alternative way of writing the above, but any calls to argv would need to be fully qualified (i.e. sys.argv)
 # import sys.argv
 
-# Misc
+# Use the following syntax to declare what to expose when someone types 'from python_note.py import *'
+# __all__ = (
+#     'Goat', 
+#     '_Velociraptor'
+# )
+
+# Packages
+# Putting an __init__.py file into a directory makes Python treat the directory as containing packages. It can
+# be empty or you can p initialization code for the package in there. Some package authors will define the
+# __all__ list inside __init__.py so that anyone importing * from the package will get all the names listed
+# within the package's __all__ list (this is by convention).
+
+
+
+print '-------------------- Misc --------------------'
 # Logic operators: and, or, not, !=, ==, >=, <=
+
+# Use all caps to indicate a constant. This is purely by convention. There are no such things as constants in Python.
+# It's up to developers to not modify them
+PI = 3.1416
 
 print isinstance(None, object) # True (None is Python's version of null)
 print issubclass(str, object) # True
 print None is None # True (There is only one None)
 print type(1) # <type 'int'>
 print None.__class__ # <type 'NoneType'>
+
+# Use dir() to print out all the object's methods
 # print dir(sys) # Displays names defined in module 'sys'
 # print dir() # Displays named defined currently
 # print dir(__builtin__) # Displays names of built-in functions and variables
@@ -25,8 +45,14 @@ print Child.__mro__ # (<class '__main__.Child'>, <class '__main__.Parent'>, <typ
 print Child.__mro__.__class__ # <type 'tuple'>
 print Child.__mro__.__class__.__name__ # tuple
 
-# Strings
-print '--- Strings ---'
+# This is useful when writing Python scripts that need to be usable as both scripts run from the command line
+# as well as modules imported from other Python modules.
+if __name__ == "__main__":
+	print 'This script was run from the command line'
+
+
+
+print '-------------------- Strings --------------------'
 print 'This is a \n test' # Test will appear on a new line
 print r'This is a \n test' # Raw string, backslash doesn't act as an escape character
 print 'It was the best of times. \
@@ -54,8 +80,9 @@ print 'FOO'.lower() # 'foo'
 print 'kevin william pang'.title() # 'Kevin William Pang'
 print 'A b C'.swapcase() # 'a B c'
 
-# Functions
-print '--- Functions ---'
+
+
+print '-------------------- Functions --------------------'
 def print_two(*args):
 	'A string placed at the beginning of a function is used as documentation'
 	arg1, arg2 = args
@@ -104,7 +131,10 @@ def pass_in_list_and_dictionary(*arr, **dict):
 
 pass_in_list_and_dictionary(1, 2, 3, a=4, b=5, c=6) # 1, 2, 3, a:4, b:5, c:6
 
-# If / else
+
+
+
+print '-------------------- If / else --------------------'
 var_1 = 1
 var_2 = 2
 
@@ -115,8 +145,9 @@ elif var_1 == var_2:
 else:
 	print '1 < 2'
 	
-# Lists
-print '--- Lists --- '
+	
+	
+print '-------------------- Lists --------------------'
 colors = ['red', 'blue']
 colors.append('green')
 colors.insert(1, 'white')
@@ -158,8 +189,10 @@ filtered_seq = filter(is_even, seq)
 print seq # [1, 2, 3, 4, 5, 6]
 print filtered_seq # [2, 4, 6]
 
-# Sets
-print '--- Sets ---'
+
+
+
+print '-------------------- Sets --------------------'
 highlanders = ['MacLeod', 'Ramirez', 'MacLeod', 'Matunas', 'MacLeod', 'Malcolm', 'MacLeod']
 there_can_be_only_one = set(highlanders)
 print len(highlanders) # 7
@@ -167,8 +200,10 @@ print len(there_can_be_only_one) # 4
 
 print set('12345') # set(['1', '2', '3', '4', '5'])
 
-# Tuples
-print '--- Tuples ---'
+
+
+
+print '-------------------- Tuples --------------------'
 a_tuple = (1, 2, 3) # Immutable, cannot assign new values or append
 print a_tuple[1] # 2
 a_list = list(a_tuple) # Convert tuple to list
@@ -180,23 +215,29 @@ print a_tuple # (1, 2, 3, 4)
 empty_tuple = ()
 another_empty_tuple = tuple()
 
-# For loops
-print '--- For loops ---'
+
+
+
+print '-------------------- For loops --------------------'
 for color in colors:
 	print color
 
 for i in range(0, len(colors)):
 	print colors[i]
 
-# While loops
-print '--- While loops ---'
+
+
+
+print '-------------------- While loops --------------------'
 i = 0
 while i < len(colors):
 	print colors[i]
 	i += 1
 
-# Dictionaries / Hashes
-print '--- Dictionaries / Hashes ---'
+
+
+
+print '-------------------- Dictionaries / Hashes --------------------'
 stuff = {'name' : 'Kevin', 'age' : 29}
 print stuff['name']
 print stuff['age']
@@ -213,8 +254,10 @@ print len(empty_dictionary) # 0
 another_empty_dictionary = {}
 print len(another_empty_dictionary) # 0
 
-# Try / Catch
-print '--- Try / Catch ---'
+
+
+
+print '-------------------- Try / Catch --------------------'
 try:
 	None.some_method_none_does_not_know_about()
 except Exception as ex:
@@ -241,8 +284,10 @@ except Exception as ex:
 else:
 	print "Yay!" # Yay!
 
-# Classes
-print '--- Classes ---'
+
+
+
+print '-------------------- Classes --------------------'
 class Car(object):
 	total_cars = 0 # Class variable (any variables defined outside of a function are class variables)
 	
@@ -297,7 +342,7 @@ class Hummer(Car):
 		self.miles += 2 * miles
 		
 	def print_mileage(self):
-		super(Hummer, self).print_mileage() # This is how you invoke the parent class
+		super(Hummer, self).print_mileage() # This is how you invoke the parent class.
 		
 hummer = Hummer()
 hummer.drive(50)
@@ -305,8 +350,10 @@ hummer.print_mileage()
 
 print Car.total_cars # 2
 
-# Monkey patching
-print '--- Monkey patching ---'
+
+
+
+print '-------------------- Monkey patching --------------------'
 class Dog(object):
 	def bark(self):
 		return 'WOOF'
@@ -320,8 +367,10 @@ a_dog = Dog()
 print a_dog.bark() # WOOF
 print a_dog.wag() # HAPPY
 
-# Lambdas
-print '--- Lambdas ---'
+
+
+
+print '-------------------- Lambdas --------------------'
 def make_incrementor(n):
 	return lambda x: x + n # Creates an anonymous function, restricted to a single expression
 	
@@ -340,8 +389,11 @@ f = make_incrementor_without_lambdas(42)
 print f(0) # 42
 print f(1) # 43
 
+
+
+
+print '-------------------- Map --------------------'
 # Map transforms elements of a list
-print '--- Map ---'
 def add_ten(item):
 	return item + 10
 
@@ -351,8 +403,11 @@ mapped_seq = map(add_ten, seq)
 print seq # [1, 2, 3]
 print mapped_seq # [11, 12, 13]
 
+
+
+
+print '-------------------- Reduce --------------------'
 # Reduce applies a function to each item of the list and accumulates the values to reduce the list to a single value
-print '--- Reduce ---'
 def add(accumulated_value, item):
 	return accumulated_value + item
 
@@ -362,8 +417,10 @@ def multiply(accumulated_value, item):
 print reduce(add, [1, 2, 3]) # 1 + 2 + 3 = 6
 print reduce(multiply, [1, 2, 3], 1) # 1 * 1 * 2 * 3 = 6
 
-# List comprehensions
-print '--- List comprehensions ---'
+
+
+
+print '-------------------- List comprehensions --------------------'
 meats = ['ham', 'turkey', 'steak']
 print [meat.upper() for meat in meats] # ['HAM', 'TURKEY', 'STEAK']
 print map(lambda meat: meat.upper(), meats) # This is equivalent to the above
@@ -373,9 +430,12 @@ def upper_meat(meat):
 	
 print map(upper_meat, meats) # This is also equivalent
 
-# Generators (slightly different than list comprehensions b/c generators must be iterated through, the values are 
-# generated on the fly rather than stored. Generators are memory friendly, but less versatile.)
-print '--- Generators ---'
+
+
+
+print '-------------------- Generators --------------------'
+# Generators  areslightly different than list comprehensions b/c generators must be iterated through, the values are 
+# generated on the fly rather than stored. Generators are memory friendly, but less versatile.
 result = []
 bacon_generator = (n + ' bacon' for n in ['crunchy', 'veggie', 'danish'])
 for bacon in bacon_generator:
@@ -427,7 +487,6 @@ for item in square_me_generator:
 
 # This will also work, since converting to a list will iterate via the next() routine
 # print list(square_me_generator) # [0, 1, 4, 9 ,16]
-
 def fibon(n):
     a = b = 1
     for i in xrange(n):
@@ -437,8 +496,10 @@ def fibon(n):
 for x in fibon(5):
 	print x # 1 1 2 3 5
 	
-# Iterators
-print '--- Iterators ---'
+	
+	
+	
+print '-------------------- Iterators --------------------'
 it = iter(range(0, 6))
 
 for num in it:
@@ -448,9 +509,10 @@ it = iter(range(0, 6))
 print next(it) # 0
 print next(it) # 1
 
-# Enums
-print '--- Enums ---'
 
+
+
+print '-------------------- Enums --------------------'
 # Python doesn't have support for Enums, but you can make your own via classes
 class Colors:
 	RED = 1
@@ -460,12 +522,10 @@ class Colors:
 print Colors.RED # 1
 # print Colors.ORANGE # This will throw an AttributeError exception since Colors doesn't contain an attribute called ORANGE 
 
-# This is useful when writing Python scripts that need to be usable as both scripts run from the command line
-# as well as modules imported from other Python modules.
-if __name__ == "__main__":
-	print 'This script was run from the command line'
 
-# IO
+
+
+print '-------------------- IO --------------------'
 if False:
 	# Get input from command line
 	age = raw_input('How old are you? ')
@@ -483,27 +543,11 @@ if False:
 	# Reading files using the with statement
 	with open('python_notes.py', 'r') as f:
 		print f.read()
-	
-# Packages
-# Putting an __init__.py file into a directory makes Python treat the directory as containing packages. It can
-# be empty or you can p initialization code for the package in there. Some package authors will define an
-# __all__ list inside __init__.py so that anyone importing * from the package will get all the names listed
-# within the package's __all__ list (this is by convention).
 
-# Decorating with functions
-print '--- Decorating with functions ---'
-def addCowbell(fn):
-	fn.foo = 'foo'
-	return fn
 
-@addCowbell
-def bar():
-	return 'bar'
-	
-print bar.foo # foo
 
-# Partials
-print '--- Partials ---'
+
+print '-------------------- Partials --------------------'
 def max(a, b):
 	if a > b:
 		return a
@@ -515,9 +559,24 @@ max100 = partial(max, 100)
 print max100(50) # 100
 print max100(150) # 150
 
-# Decorators
-print '--- Decorators ---'
 
+
+
+print '-------------------- Decorating with functions --------------------'
+def addCowbell(fn):
+	fn.foo = 'foo'
+	return fn
+
+@addCowbell
+def bar():
+	return 'bar'
+	
+print bar.foo # foo
+
+
+
+
+print '-------------------- Decorators --------------------'
 # Decorators are wrappers that let you execute code before and after the function they decorate
 def makebold(fn):
     def wrapper():
@@ -538,9 +597,10 @@ def say():
 
 print say() # <b><i>hello</i></b>
 
-# Metaclasses (note that these aren't very frequently used!)
-print '--- Metaclasses ---'
 
+
+
+print '-------------------- Metaclasses --------------------'
 def some_method(self):
 	print 'some_method'
 
