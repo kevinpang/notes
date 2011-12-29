@@ -1,57 +1,6 @@
 from sys import argv
 from functools import partial
 
-# Alternative way of writing the above, but any calls to argv would need to be fully qualified (i.e. sys.argv)
-# import sys.argv
-
-# Use the following syntax to declare what to expose when someone types 'from python_note.py import *'
-# __all__ = (
-#     'Goat', 
-#     '_Velociraptor'
-# )
-
-# Packages
-# Putting an __init__.py file into a directory makes Python treat the directory as containing packages. It can
-# be empty or you can p initialization code for the package in there. Some package authors will define the
-# __all__ list inside __init__.py so that anyone importing * from the package will get all the names listed
-# within the package's __all__ list (this is by convention).
-
-
-
-print '-------------------- Misc --------------------'
-# Logic operators: and, or, not, !=, ==, >=, <=
-
-# Use all caps to indicate a constant. This is purely by convention. There are no such things as constants in Python.
-# It's up to developers to not modify them
-PI = 3.1416
-
-print isinstance(None, object) # True (None is Python's version of null)
-print issubclass(str, object) # True
-print None is None # True (There is only one None)
-print type(1) # <type 'int'>
-print None.__class__ # <type 'NoneType'>
-
-# Use dir() to print out all the object's methods
-# print dir(sys) # Displays names defined in module 'sys'
-# print dir() # Displays named defined currently
-# print dir(__builtin__) # Displays names of built-in functions and variables
-
-class Parent(object): pass
-class Child(Parent): pass
-
-# __mro__ (can also use the mro() function) is the Method Resolution Order. It returns a tuple listing the types
-# the class is derived from, in the order they are searched for methods.
-print Child.__mro__ # (<class '__main__.Child'>, <class '__main__.Parent'>, <type 'object'>)
-print Child.__mro__.__class__ # <type 'tuple'>
-print Child.__mro__.__class__.__name__ # tuple
-
-# This is useful when writing Python scripts that need to be usable as both scripts run from the command line
-# as well as modules imported from other Python modules.
-if __name__ == "__main__":
-	print 'This script was run from the command line'
-
-
-
 print '-------------------- Strings --------------------'
 print 'This is a \n test' # Test will appear on a new line
 print r'This is a \n test' # Raw string, backslash doesn't act as an escape character
@@ -676,3 +625,68 @@ f2 = Foo2()
 print hasattr(Foo2, 'bar') # False
 print hasattr(Foo2, 'BAR') # True
 print f2.BAR # bip
+
+
+
+
+print '-------------------- Imports --------------------'
+# Alternative way of writing:
+# 	from sys import argv
+#
+# would be:
+# 	import sys.argv
+#
+# but any calls to argv would need to be fully qualified (i.e. sys.argv)
+
+
+
+
+print '-------------------- Packages --------------------'
+# Putting an __init__.py file into a directory makes Python treat the directory as a containing packages. It can
+# be empty or you can put initialization code for the package in there. Some package authors will define the
+# __all__ list inside __init__.py so that anyone importing * from the package will get all the names listed
+# within the package's __all__ list (this is by convention).
+#
+# So for example, the following declares what gets exposed when someone types 'from python_note.py import *'
+# __all__ = (
+#     'Goat', 
+#     '_Velociraptor'
+# )
+#
+# The following will import the Duck class from a_package_folder/a_module.py
+# 	from a_package_folder.a_module import Duck
+
+
+
+
+print '-------------------- Misc --------------------'
+# Logic operators: and, or, not, !=, ==, >=, <=
+
+# Use all caps to indicate a constant. This is purely by convention. There are no such things as constants in Python.
+# It's up to developers to not modify them
+PI = 3.1416
+
+print isinstance(None, object) # True (None is Python's version of null)
+print issubclass(str, object) # True
+print None is None # True (There is only one None)
+print type(1) # <type 'int'>
+print None.__class__ # <type 'NoneType'>
+
+# Use dir() to print out all the object's methods
+# print dir(sys) # Displays names defined in module 'sys'
+# print dir() # Displays named defined currently
+# print dir(__builtin__) # Displays names of built-in functions and variables
+
+class Parent(object): pass
+class Child(Parent): pass
+
+# __mro__ (can also use the mro() function) is the Method Resolution Order. It returns a tuple listing the types
+# the class is derived from, in the order they are searched for methods.
+print Child.__mro__ # (<class '__main__.Child'>, <class '__main__.Parent'>, <type 'object'>)
+print Child.__mro__.__class__ # <type 'tuple'>
+print Child.__mro__.__class__.__name__ # tuple
+
+# This is useful when writing Python scripts that need to be usable as both scripts run from the command line
+# as well as modules imported from other Python modules.
+if __name__ == "__main__":
+	print 'This script was run from the command line'
