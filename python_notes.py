@@ -705,3 +705,18 @@ print Child.__mro__.__class__.__name__ # tuple
 # as well as modules imported from other Python modules.
 if __name__ == "__main__":
 	print 'This script was run from the command line'
+	
+class FooCatcher(object):
+	# Intercepts all requests for attributes, regardless of whether they're defined or not. Note that you can overwrite 
+	# __getattr__ instead if you only want to intercept unknown attributes. Similarly, you can overwrite __setattr__ to 
+	# intercept attribute assignments.
+	def __getattribute__(self, attr_name):
+		if attr_name[:3] == 'foo':
+			return 'Foo to you too'
+		else:
+			return super(FooCatcher, self).__getattribute__(attr_name)
+	
+catcher = FooCatcher()
+
+print catcher.foo # ' Foo to you too
+print catcher.foobar # ' Foo to you too
