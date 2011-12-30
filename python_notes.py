@@ -275,6 +275,19 @@ class Car(object):
 	def __repr__(self):
 		return self._make + ' ' + str(self.miles)
 		
+	# Note that staticmethods and classmethods overshadow instance methods, so if we had instance methods rev_engine and 
+	# rev_engine2, they wouldn't be hit (instead the staticmethod and classmethods defined below would be hit).
+	#
+	# Staticmethod and classmethod are similar, the only difference is classmethods get passed the class it was called on,
+	# or the class of the instance it was called on, as the first argument.  
+	@staticmethod
+	def rev_engine():
+		print 'VROOM!'
+
+	@classmethod
+	def rev_engine2(cls):
+		print 'VROOM2!'
+		
 car = Car()
 car.drive(50)
 car.print_mileage()
@@ -284,6 +297,8 @@ car.make = 'Honda'
 print car.make # Honda
 print str(car) # Honea
 print repr(car) # Honda 50
+Car.rev_engine() # VROOM!
+Car.rev_engine2() # VROOM2!
 
 # Inheritance
 class Hummer(Car):
