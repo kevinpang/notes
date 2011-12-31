@@ -1,4 +1,6 @@
 console.log('-------------------- Objects --------------------');
+// Objects in JavaScript are simply collections of name-value pairs (similar to dictionaries in Python and hashes in Ruby).
+// EVERYTHING in JavaScript is an object.
 var cat = {colour: "grey", name: "Spot", size: 46};
 console.log(cat.colour); // grey
 
@@ -6,12 +8,18 @@ console.log(cat.colour); // grey
 delete cat["size"]; 
 console.log(cat.size); // undefined
 
+// Check whether a property exists on an object
+console.log("size" in cat); // false
+console.log("colour" in cat); // true
 
 
 
 console.log('-------------------- Arrays --------------------');
 var some_array = ["1", "2", "3"];
 console.log(some_array.length); // 3
+some_array[100] = "100";
+console.log(some_array.length); // 101. Remember array.length isn't the # of items in the array, it's one more than the highest index
+
 var empty_array = [];
 empty_array.push("Mack");
 empty_array.push("the");
@@ -19,10 +27,6 @@ empty_array.push("Knife");
 console.log(empty_array.join(" ")); // "Mack the Knife"
 console.log(empty_array.pop()); // "Knife"
 console.log(empty_array.join(" ")); // "Mack the"
-
-// Check whether a property exists on an object
-console.log("size" in cat); // false
-console.log("colour" in cat); // true
 
 
 
@@ -100,6 +104,31 @@ myNamespace.myPublicFunction("test") // OK
 
 
 
+console.log('-------------------- Classes --------------------');
+function Person(first, last) {
+    this.first = first;
+    this.last = last;
+    
+    this.fullName = function() {
+        return this.first + ' ' + this.last;
+    }
+}
+
+// This is a better way of adding a function to the Person "class". The reason is that "fullName" has to be defined every time
+// the Person constructor is called, whereas fullNameReversed is shared by all instances of Person. 
+Person.prototype.fullNameReversed = function() {
+    return this.last + ' ' + this.first;
+}
+
+// Using the "new" keyword tells JavaScript to create a new empty object, then call the Person function with "this" set to the new
+// object. Functions that are designed to be called by "new" are called constructor functions. Common practice is to capitalize the
+// first letter of these functions to make it obvious that they are meant to be called by "new".
+var person = new Person('Kevin', 'Pang');
+console.log(person.fullName()); // Kevin Pang
+console.log(person.fullNameReversed()); // Pang Kevin
+
+
+
 console.log('-------------------- Prototypal Inheritance --------------------');
 function Shape(x, y) {
     this.x = x;
@@ -125,14 +154,26 @@ var c = new Circle(1, 2, 3);
 console.log(c.toString()); // "Circular Shape at 1, 2 with radius "3
 
 console.log('-------------------- Misc --------------------');
-// There are 6 types in javascript: number, string, boolean, object, function, undefined
+// There are 6 types in javascript: number, string, boolean, object (function, array, date, regexp), null, undefined
 
 // Number(prompt("Type a number", "")); // Converts string input to a number
 // Boolean(prompt("Type a boolean", "")); // Converts string input to a boolean
 // String(prompt("Type a string", "")); // Converts string input to a string
 
+// An important difference from other languages like Java is that in JavaScript, blocks do not have scope; only functions have scope. 
+// So if a variable is defined using var in a compound statement (for example inside an if control structure), it will be visible 
+// to the entire function.
+
 console.log(false == 0); // true
 console.log(false === 0); // false - use triple equals if you don't want javascript to do any type conversions
+
+// Converts string to int. ALWAYS provide the base, otherwise it might parse values with a leading 0 in octal
+console.log(parseInt('5', 10)); // 5
+console.log(parseInt('11', 2)); // 3
+console.log(parseInt('hello', 10)) // NaN
+console.log(isNaN(parseInt('hello', 10))); // true
+console.log(1 / 0); // Infinity
+console.log(isFinite(1 / 0)); // false
 
 // There are two ways to access properties
 var text = "testing";
