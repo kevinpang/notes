@@ -29,7 +29,7 @@ empty_array.push("Mack");
 empty_array.push("the");
 empty_array.push("Knife");
 console.log(empty_array.join(" ")); // "Mack the Knife"
-console.log(mpty_array.pop()); // "Knife"
+console.log(empty_array.pop()); // "Knife"
 console.log(empty_array.join(" ")); // "Mack the"
 
 // Check whether a property exists on an object
@@ -183,7 +183,7 @@ Shape.prototype.toString = function() {
 
 function Circle(x, y, r) {
     Shape.call(this, x, y); // invoke the base class's constructor function to take co-ords
-    this.r = ;r
+    this.r = r;
 }
 
 Circle.prototype = new Shape();
