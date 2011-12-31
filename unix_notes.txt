@@ -24,3 +24,5 @@ cp file1 file2                				copy a file
 mv file1 newname            					move or rename a file
 rm file1                							remove or delete a file
 mkdir dir                							make a directory
+
+which python													locates where python is located

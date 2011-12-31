@@ -193,7 +193,7 @@ print stuff['age']
 print stuff # {'age':29, 'name':'Kevin'}
 print stuff.keys() # ['age', 'name']
 print stuff.values() # [29, 'Kevin']
-del stuff['age']
+del stuff['age'] # Note that del can also remove attributes from objects / classes
 print stuff # {'name':'Kevin'}
 print 'age' in stuff # False
 print 'name' in stuff # True
@@ -675,6 +675,9 @@ print '-------------------- Packages --------------------'
 
 
 print '-------------------- Misc --------------------'
+import sys
+print sys.path # List of directories Python goes through to search for modules and files (note that you can append to this)
+
 # Logic operators: and, or, not, !=, ==, >=, <=
 
 # Use all caps to indicate a constant. This is purely by convention. There are no such things as constants in Python.
@@ -709,7 +712,8 @@ if __name__ == "__main__":
 class FooCatcher(object):
 	# Intercepts all requests for attributes, regardless of whether they're defined or not. Note that you can overwrite 
 	# __getattr__ instead if you only want to intercept unknown attributes. Similarly, you can overwrite __setattr__ to 
-	# intercept attribute assignments.
+	# intercept attribute assignments and __delattr__ to intercept attribute deletions (as in removing an attribute altogether
+	# via the "del" statement)
 	def __getattribute__(self, attr_name):
 		if attr_name[:3] == 'foo':
 			return 'Foo to you too'
