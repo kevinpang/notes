@@ -5,12 +5,19 @@ var cat = {colour: "grey", name: "Spot", size: 46};
 console.log(cat.colour); // grey
 
 // Removes the "size" property from the cat object
-delete cat["size"]; 
+delete cat["size"]; // This could also be written as: delete cat.size
 console.log(cat.size); // undefined
 
 // Check whether a property exists on an object
 console.log("size" in cat); // false
 console.log("colour" in cat); // true
+
+for(var i in cat) {
+    // hasOwnProperty checks whether an object has a property defined on itself and not somewhere in its prototype chain
+    if (cat.hasOwnProperty(i)) {
+        console.log(i, cat[i]); // name Spot
+    }
+}
 
 
 
@@ -77,6 +84,23 @@ var addTwo = makeAddFunction(2);
 var addFive = makeAddFunction(5);
 console.log(addTwo(1) + addFive(1)); // 3 + 6 = 9
 
+// Here's a common mistake with using closures inside of loops. This will log the number 10 ten times since by the time the anonymous
+// function has been called, the loop has already finished. Since the anonymous function closed over "i", it keeps a reference to it.
+for(var i = 0; i < 10; i++) {
+    setTimeout(function() {
+        console.log(i);  
+    }, 1000);
+}
+
+// In order to get the desired behavior (printing 0 through 9), we need to create a copy of the value i. 
+for(var i = 0; i < 10; i++) {
+    (function(e) {
+        setTimeout(function() {
+            console.log(e);  
+        }, 1000);
+    })(i);
+}
+
 
 
 
@@ -89,18 +113,37 @@ var myNamespace = (function(){
         console.log(someText);
     }
 	
-    // Public variables / methods
+    // Public variables / methods.
     return {
         myPublicVar: "foo",	
-	       myPublicFunction: function(bar){
-    	       myPrivateVar++;
-	           myPrivateMethod(bar);
-	       }
+	    myPublicFunction: function(bar){
+            myPrivateVar++;
+	        myPrivateMethod(bar);
+	    }
     }
 })();
 
 myNamespace.myPublicVar = "blah"; // OK
 myNamespace.myPublicFunction("test") // OK
+
+
+
+
+console.log('-------------------- Namespacing --------------------');
+// One way to namespace is to use the module pattern like above. Another way is to use an object literal (rather than a self-executing
+// anonymous function which returns an object literal). You lose the benefit of private variables / methods, but it's a little easier
+// to read (but you have to abide by the object literal's strict syntax).
+var anotherNamespace = {
+    foo: function() {
+        return 'foo';
+    },
+    bar: function() {
+        return 'bar';
+    }
+};
+
+console.log(anotherNamespace.foo());
+console.log(anotherNamespace.bar());
 
 
 
@@ -121,12 +164,23 @@ Person.prototype.fullNameReversed = function() {
     return this.last + ' ' + this.first;
 }
 
+// You can add multiple functions to the prototype using object notation like so:
+Person.prototype = {
+    fullNameReversed: function() {
+        return this.last + ' ' + this.first;
+    },
+    fullNameInCaps: function() {
+        return this.fullName().toUpperCase();
+    }
+}
+
 // Using the "new" keyword tells JavaScript to create a new empty object, then call the Person function with "this" set to the new
 // object. Functions that are designed to be called by "new" are called constructor functions. Common practice is to capitalize the
 // first letter of these functions to make it obvious that they are meant to be called by "new".
 var person = new Person('Kevin', 'Pang');
 console.log(person.fullName()); // Kevin Pang
 console.log(person.fullNameReversed()); // Pang Kevin
+console.log(person.fullNameInCaps()); // KEVIN PANG
 
 
 
