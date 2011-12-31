@@ -31,6 +31,7 @@ print 'A b C'.swapcase() # 'a B c'
 
 
 
+
 print '-------------------- Functions --------------------'
 def print_two(*args):
 	'A string placed at the beginning of a function is used as documentation'
@@ -93,6 +94,7 @@ elif var_1 == var_2:
 	print '1 = 2'
 else:
 	print '1 < 2'
+	
 	
 	
 	

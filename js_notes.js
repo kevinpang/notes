@@ -14,6 +14,7 @@ console.log("colour" in cat); // true
 
 
 
+
 console.log('-------------------- Arrays --------------------');
 var some_array = ["1", "2", "3"];
 console.log(some_array.length); // 3
@@ -129,6 +130,7 @@ console.log(person.fullNameReversed()); // Pang Kevin
 
 
 
+
 console.log('-------------------- Prototypal Inheritance --------------------');
 function Shape(x, y) {
     this.x = x;
@@ -152,6 +154,9 @@ Circle.prototype.toString = function() {
 
 var c = new Circle(1, 2, 3);
 console.log(c.toString()); // "Circular Shape at 1, 2 with radius "3
+
+
+
 
 console.log('-------------------- Misc --------------------');
 // There are 6 types in javascript: number, string, boolean, object (function, array, date, regexp), null, undefined
