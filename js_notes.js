@@ -28,20 +28,15 @@ console.log("colour" in cat); // true
 
 
 console.log('-------------------- Closures --------------------');
-
-// Here I have defined a function within a function. The inner
-// function gains access to all the outer function's local variables,
+// Here I have defined a function within a function. The inner function gains access to all the outer function's local variables,
 // including a. The variable a is in scope for the inner function.
 // 
-// Normally when a function exits, all it's local variables are blown
-// away. However, if we return the inner function and assign it to a
-// variable fnc, so that it persists after outer has exited, all of the
-// variables that were in scope when inner was defined also persist. The
-// variable a has been closed over, it is within a closure.
+// Normally when a function exits, all it's local variables are blown away. However, if we return the inner function and assign 
+// it to a variable fnc, so that it persists after outer has exited, all of the variables that were in scope when inner was
+// defined also persist. The variable a has been closed over, it is within a closure.
 // 
-// Note that the variable a is totally private to fnc. This is a way
-// of creating private variables in a functional programming language
-// such as JavaScript.
+// Note that the variable a is totally private to fnc. This is a way of creating private variables in a functional programming
+// language such as JavaScript.
 // 
 // See http://stackoverflow.com/a/111200/1574 for a more thorough explanation
 outer = function() {
@@ -154,7 +149,7 @@ function sum(numbers) {
 	var total = 0;
 
 	forEach(numbers, function (number) {
-		total += number;
+	    total += number;
 	});
 
 	return total;
@@ -163,22 +158,6 @@ function sum(numbers) {
 console.log(sum([1, 10, 100])); // 111
 console.log(Math.min(5, 6)); // 5
 console.log(Math.min.apply(null, [5, 6])); // 5
-
-function reduce(combine, base, array) {
-	forEach(array, function (element) {
-		base = combine(base, element);
-	});
-
-	return base;
-}
-
-function add(a, b) {
-	return a + b;
-}
-
-function sum(numbers) {
-	return reduce(add, 0, numbers);
-}
 
 function map(func, array) {
 	var result = [];
@@ -191,3 +170,13 @@ function map(func, array) {
 }
 
 console.log(map(Math.round, [0.01, 2, 9.89, Math.PI])); // [0, 2, 10, 3]
+
+function reduce(combine, base, array) {
+	forEach(array, function (element) {
+		base = combine(base, element);
+	});
+
+	return base;
+}
+
+console.log(reduce(function(a, b) {return a + b}, 0, [1, 2, 3, 4, 5])) // 15
