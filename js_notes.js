@@ -1,11 +1,17 @@
 console.log('-------------------- Objects --------------------');
 // Objects in JavaScript are simply collections of name-value pairs (similar to dictionaries in Python and hashes in Ruby).
 // EVERYTHING in JavaScript is an object.
-var cat = {colour: "grey", name: "Spot", size: 46};
+var empty_object = {}
+
+var cat = {
+    colour: "grey", 
+    name: "Spot", 
+    size: 46
+};
+
 console.log(cat.colour); // grey
 
-// Removes the "size" property from the cat object
-delete cat["size"]; // This could also be written as: delete cat.size
+delete cat["size"]; // // Removes the "size" property from the cat object. This could also be written as: delete cat.size
 console.log(cat.size); // undefined
 
 // Check whether a property exists on an object
@@ -153,10 +159,17 @@ function Person(first, last) {
     this.first = first;
     this.last = last;
     
+    // This is not the recommended way to define methods on a class (see below)
     this.fullName = function() {
         return this.first + ' ' + this.last;
     }
 }
+
+// Using the "new" keyword tells JavaScript to create a new empty object, then call the Person function with "this" set to the new
+// object. Functions that are designed to be called by "new" are called constructor functions. Common practice is to capitalize the
+// first letter of these functions to make it obvious that they are meant to be called by "new".
+var person = new Person('Kevin', 'Pang');
+console.log(person.fullName()); // Kevin Pang
 
 // This is a better way of adding a function to the Person "class". The reason is that "fullName" has to be defined every time
 // the Person constructor is called, whereas fullNameReversed is shared by all instances of Person. 
@@ -174,11 +187,6 @@ Person.prototype = {
     }
 }
 
-// Using the "new" keyword tells JavaScript to create a new empty object, then call the Person function with "this" set to the new
-// object. Functions that are designed to be called by "new" are called constructor functions. Common practice is to capitalize the
-// first letter of these functions to make it obvious that they are meant to be called by "new".
-var person = new Person('Kevin', 'Pang');
-console.log(person.fullName()); // Kevin Pang
 console.log(person.fullNameReversed()); // Pang Kevin
 console.log(person.fullNameInCaps()); // KEVIN PANG
 
