@@ -45,6 +45,51 @@ console.log(empty_array.join(" ")); // "Mack the"
 
 
 
+console.log('-------------------- Scope --------------------');
+// Variables declared without the "var" keyword are in the global scope. Variables declared with the "var" keyword outside of any 
+// functions are also in the global scope.
+//
+// Variables declared with the "var" keyword within a function are called local variables and are defined only within the body of 
+// that function. Local variables take precedent over global variables. Local variables are also visible within any functions
+// nested within the function they were defined in.
+
+function test(o) { 
+    var i = 0; // i is defined throughout function
+
+    if (typeof o == 'object') {
+        var j = 0; // j is defined everywhere, not just within the if block
+        
+        for (var k = 0; k < 10; k++) { // k is defined everywhere, not just within the loop
+            console.log(k);
+        }
+        
+        console.log(k); // k is still defined, will print 10
+    }
+    
+    console.log(j); // j is defined, but may not be initialized
+}
+
+// JavaScript supports hoisting, meaning that variables declared within a function are visible even before they are declared:
+var scope = 'global';
+
+function f() {
+    console.log(scope); // Prints 'undefined', not 'global'!
+    var scope = 'local'; // Variable initialized here, but defined everywhere within the function
+    console.log(scope); // Prints 'local'
+}
+
+// In other words, the function f could be rewritten as follows. Some JavaScript devs try to define all of their variables at
+// the top of a function to make it more obvious what the true scope of their variables is:
+function g() {
+    var scope;
+    console.log(scope);
+    scope = 'local';
+    console.log(scope);
+}
+
+
+
+
 console.log('-------------------- Closures --------------------');
 // Here I have defined a function within a function. The inner function gains access to all the outer function's local variables,
 // including a. The variable a is in scope for the inner function.
@@ -187,8 +232,9 @@ Person.prototype = {
     }
 }
 
-console.log(person.fullNameReversed()); // Pang Kevin
-console.log(person.fullNameInCaps()); // KEVIN PANG
+person2 = new Person('Linda', 'Ly');
+console.log(person2.fullNameReversed()); // Ly Linda
+console.log(person2.fullNameInCaps()); // LINDA LY
 
 
 
@@ -241,6 +287,18 @@ console.log(parseInt('hello', 10)) // NaN
 console.log(isNaN(parseInt('hello', 10))); // true
 console.log(1 / 0); // Infinity
 console.log(isFinite(1 / 0)); // false
+
+// Conversions to number, string, boolean, and object
+console.log(Number('3')); // 3, note that parseInt and parseFloat are similar, but more flexible with the input provided (e.g.
+                          // they skip whitespace and parse as many numeric values as they can, even if there are alpha chars)
+console.log(String(false)); // "false"
+console.log(Boolean([])); // true
+console.log(Object(3)); // new Number(3)
+
+// Random idioms you might see as shorthand for convertions above
+// x + "" // Same as String(x)
+// +x // Same as Number(x)
+// !!x // Same as Boolean(x)
 
 // There are two ways to access properties
 var text = "testing";
