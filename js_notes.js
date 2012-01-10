@@ -1,3 +1,5 @@
+"use strict" // This must be put at the beginning of a script or function body to enable strict mode
+
 console.log('-------------------- Objects --------------------');
 // Objects in JavaScript are simply collections of name-value pairs (similar to dictionaries in Python and hashes in Ruby).
 // EVERYTHING in JavaScript is an object.
@@ -69,7 +71,11 @@ function test(o) {
     console.log(j); // j is defined, but may not be initialized
 }
 
-// JavaScript supports hoisting, meaning that variables declared within a function are visible even before they are declared:
+// JavaScript supports hoisting, meaning that variables declared within a function are visible even before they are declared.
+// Note that initialization occurs at the location of the var statement, the value of the variable is undefined before that
+// point in code. Note that function definition statements (like function "f", below) are also hoisted. However, function
+// expressions that are assigned to a variable only have the variable hoisted (the variable initialization code remains where
+// you placed it and is undefined until then).
 var scope = 'global';
 
 function f() {
@@ -102,7 +108,7 @@ console.log('-------------------- Closures --------------------');
 // language such as JavaScript.
 // 
 // See http://stackoverflow.com/a/111200/1574 for a more thorough explanation
-outer = function() {
+var outer = function() {
 	var a = 1;
 
 	var inner = function() {
@@ -112,7 +118,7 @@ outer = function() {
 	return inner;
 }
 
-fnc = outer();
+var fnc = outer();
 fnc(); // 1
 
 // Example function maker that takes advantage of closures
@@ -232,7 +238,7 @@ Person.prototype = {
     }
 }
 
-person2 = new Person('Linda', 'Ly');
+var person2 = new Person('Linda', 'Ly');
 console.log(person2.fullNameReversed()); // Ly Linda
 console.log(person2.fullNameInCaps()); // LINDA LY
 
@@ -269,6 +275,11 @@ console.log(c.toString()); // "Circular Shape at 1, 2 with radius "3
 console.log('-------------------- Misc --------------------');
 // There are 6 types in javascript: number, string, boolean, object (function, array, date, regexp), null, undefined
 
+// Expressions are evaluated to produce a value, statements are executed to make something happen (i.e.
+// anything that ends with a semicolon). Expressions with side effects, such as assignment and function invocations, are expression
+// statements. Similarly, var and function are declaration statements. JavaScript programs are simply a sequence of statements, 
+// separated from one another with semicolons.
+
 // Number(prompt("Type a number", "")); // Converts string input to a number
 // Boolean(prompt("Type a boolean", "")); // Converts string input to a boolean
 // String(prompt("Type a string", "")); // Converts string input to a string
@@ -294,6 +305,14 @@ console.log(Number('3')); // 3, note that parseInt and parseFloat are similar, b
 console.log(String(false)); // "false"
 console.log(Boolean([])); // true
 console.log(Object(3)); // new Number(3)
+
+var d = new Date();
+console.log(d instanceof Date); // True
+console.log(d instanceof Object); // True
+console.log(d instanceof Number); // False
+console.log(typeof d); // object, can also be written as typeof(d)
+console.log(typeof null); // object :-\, typeof only distinguishes between objects, functions, and primitive types (string, number, 
+                          // boolean, undefined)
 
 // Random idioms you might see as shorthand for convertions above
 // x + "" // Same as String(x)
@@ -346,3 +365,17 @@ function reduce(combine, base, array) {
 }
 
 console.log(reduce(function(a, b) {return a + b}, 0, [1, 2, 3, 4, 5])) // 15
+
+// Any statement may be labeled by preceding it with an identifier and a colon (only useful for controlling break and continue)
+var x = 0;
+mainloop: while(x < 10) {
+    console.log(x);
+    
+    if (x == 5)
+        break mainloop; // This will cause this while loop to only log the numbers 0, 1, 2, 3, 4, 5
+    else
+        x++;
+}
+
+// Use this command to trigger a breakpoint in apps where a debugger is running (e.g. Firebug)
+// debugger;
