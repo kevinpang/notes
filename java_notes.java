@@ -8,6 +8,17 @@ class java_notes {
         
         Calculator calc = new Calculator();
         System.out.println(calc.add(5, 6));
+        
+        String x = "x";
+        String y = "xy";
+        
+        y = String.valueOf(y.charAt(0));
+        
+        System.out.println(x == y);
+        System.out.println(x.equals(y));
+        
+        Integer i = 5;
+        System.out.println(i.getClass());
     }
 }
 
